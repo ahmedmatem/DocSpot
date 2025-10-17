@@ -7,11 +7,24 @@ import { AppointmentComponent } from "./sections/appointment/appointment.compone
 import { DepartmentsComponent } from "./sections/departments/departments.component";
 import { DoctorsComponent } from "./sections/doctors/doctors.component";
 import { FaqComponent } from "./sections/faq/faq.component";
+import { TestimonialComponent } from "./sections/testimonial/testimonial.component";
+import { GalleryComponent } from "./sections/gallery/gallery.component";
 
 @Component({
   standalone: true,
   selector: 'app-main',
-  imports: [HeroComponent, AboutComponent, StatsComponent, ServicesComponent, AppointmentComponent, DepartmentsComponent, DoctorsComponent, FaqComponent],
+  imports: [
+    HeroComponent,
+    AboutComponent,
+    StatsComponent,
+    ServicesComponent,
+    AppointmentComponent,
+    DepartmentsComponent,
+    DoctorsComponent,
+    FaqComponent,
+    TestimonialComponent,
+    GalleryComponent
+],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
