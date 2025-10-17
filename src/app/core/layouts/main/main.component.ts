@@ -10,6 +10,7 @@ import { FaqComponent } from "./sections/faq/faq.component";
 import { TestimonialComponent } from "./sections/testimonial/testimonial.component";
 import { GalleryComponent } from "./sections/gallery/gallery.component";
 import { ContactComponent } from "./sections/contact/contact.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   standalone: true,
@@ -25,7 +26,8 @@ import { ContactComponent } from "./sections/contact/contact.component";
     FaqComponent,
     TestimonialComponent,
     GalleryComponent,
-    ContactComponent
+    ContactComponent,
+    FooterComponent
 ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
