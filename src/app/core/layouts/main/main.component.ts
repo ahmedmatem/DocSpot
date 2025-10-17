@@ -9,6 +9,7 @@ import { DoctorsComponent } from "./sections/doctors/doctors.component";
 import { FaqComponent } from "./sections/faq/faq.component";
 import { TestimonialComponent } from "./sections/testimonial/testimonial.component";
 import { GalleryComponent } from "./sections/gallery/gallery.component";
+import { ContactComponent } from "./sections/contact/contact.component";
 
 @Component({
   standalone: true,
@@ -23,7 +24,8 @@ import { GalleryComponent } from "./sections/gallery/gallery.component";
     DoctorsComponent,
     FaqComponent,
     TestimonialComponent,
-    GalleryComponent
+    GalleryComponent,
+    ContactComponent
 ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
