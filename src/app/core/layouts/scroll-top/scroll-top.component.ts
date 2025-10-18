@@ -1,12 +1,12 @@
 import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-scrll-top',
+  selector: 'app-scroll-top',
   imports: [],
-  templateUrl: './scrll-top.component.html',
-  styleUrl: './scrll-top.component.css'
+  templateUrl: './scroll-top.component.html',
+  styleUrl: './scroll-top.component.css'
 })
-export class ScrllTopComponent {
+export class ScrollTopComponent {
   @ViewChild('scrollTopBtn', { static: true }) scrollTopBtn!: ElementRef<HTMLElement>;
 
   constructor(private renderer: Renderer2) {}

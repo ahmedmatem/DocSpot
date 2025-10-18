@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "./core/layouts/header/header.component";
 import { MainComponent } from "./core/layouts/main/main.component";
-import { ScrllTopComponent } from "./core/layouts/scrll-top/scrll-top.component";
+import { ScrollTopComponent } from "./core/layouts/scroll-top/scroll-top.component";
 import { FooterComponent } from "./core/layouts/footer/footer.component";
 
 @Component({
@@ -10,7 +10,7 @@ import { FooterComponent } from "./core/layouts/footer/footer.component";
   imports: [
     HeaderComponent, 
     MainComponent, 
-    ScrllTopComponent, 
+    ScrollTopComponent, 
     FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
