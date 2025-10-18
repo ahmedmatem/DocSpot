@@ -1,4 +1,7 @@
-import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, HostListener, Inject, Renderer2, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +12,19 @@ import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angu
 export class HeaderComponent {
   @ViewChild('headerEl', { static: true }) headerEl!: ElementRef<HTMLElement>;
 
-  constructor(private renderer: Renderer2) {}
+  isMobileNavOpen = false;
+  private sub?: Subscription;
+
+  constructor(
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private doc: Document,
+    private router: Router
+  ) {
+    // Auto-close mobile nav on route change (optional but nice)
+    this.sub = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => this.closeMobileNav());
+  }
 
   ngAfterViewInit(): void {
     this.toggleScrolled(); // set initial state after view renders
@@ -42,5 +57,49 @@ export class HeaderComponent {
   ngOnDestroy(): void {
     // nothing else to clean up because HostListener is auto-removed
     this.renderer.removeClass(document.body, 'scrolled');
+
+    this.sub?.unsubscribe();
+    this.renderer.removeClass(this.doc.body, 'mobile-nav-active');
+  }
+
+  // Mobile Nav Toggle
+  toggleMobileNav(e?: Event): void {
+    e?.preventDefault();
+    this.isMobileNavOpen = !this.isMobileNavOpen;
+
+    if (this.isMobileNavOpen) {
+      this.renderer.addClass(this.doc.body, 'mobile-nav-active');
+    } else {
+      this.renderer.removeClass(this.doc.body, 'mobile-nav-active');
+    }
+  }
+
+  closeMobileNavIfOpen(): void {
+    if (this.isMobileNavOpen) this.toggleMobileNav();
+  }
+
+  closeMobileNav(): void {
+    if (!this.isMobileNavOpen) return;
+    this.isMobileNavOpen = false;
+    this.renderer.removeClass(this.doc.body, 'mobile-nav-active');
+  }
+
+  // Handle dropdown toggles inside the nav (delegated)
+  toggleDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const a = event.currentTarget as HTMLElement;
+    const li = a.parentElement;           // the <li class="dropdown">
+    const next = a.nextElementSibling;    // the nested <ul>
+
+    if (li) li.classList.toggle('active');
+    if (next) next.classList.toggle('dropdown-active');
+  }
+
+  // Optional: if you want generic same-page link handling without adding (click) everywhere
+  onNavClick(e: MouseEvent): void {
+    const target = e.target as HTMLElement;
+    if (target.closest('a[href^="#"]')) this.closeMobileNavIfOpen();
   }
 }
