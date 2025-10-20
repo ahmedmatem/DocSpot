@@ -23,3 +23,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-calendar .mat-calendar-body-label {
   display: none;
 }
+
+.mat-calendar{
+  --mat-datepicker-calendar-date-today-outline-color: var(--accent-color);
+}
+.mat-calendar {
+  --mat-datepicker-calendar-date-selected-state-background-color: var(--accent-color);
+  --mat-datepicker-calendar-date-selected-state-text-color: #ffffff;
+}
