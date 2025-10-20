@@ -113,6 +113,15 @@
     font-size: 0.9rem;
   }
 
+  .demo-inline-calendar-card {
+  width: 300px;
+}
+
+.icon{
+  max-width: 25px;
+  max-height: 25px;
+}
+
 @keyframes php-email-form-loading {
   0% {
     transform: rotate(0deg);
