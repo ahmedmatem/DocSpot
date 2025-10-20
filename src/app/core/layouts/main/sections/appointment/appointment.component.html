@@ -9,6 +9,39 @@
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
+            <div class="row">
+                <!-- left side -->
+                <div class="col-12 col-lg-6">
+                    <h6 class="border-bottom mb-4 pb-1 heading-color"> Данни за пациента </h6>
+                    <div class="row">
+                        <div class="col-12 col-lg-7 form-group">
+                            <label for="name">Име на пациента</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Мария Иванова" required="">
+                        </div>
+
+                        <div class="col-12 col-lg-5 form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Мария Иванова" required="">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="email">Имейл адрес</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" required="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- right side -->
+                <div class="col-12 col-lg-6">
+                    <h6 class="border-bottom mb-2 pb-1"> Дата и час </h6>
+                </div>
+            </div>
+        </form>
+        
+
+        <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
 
             <div class="row">
                 <div class="col-12 col-lg-6">

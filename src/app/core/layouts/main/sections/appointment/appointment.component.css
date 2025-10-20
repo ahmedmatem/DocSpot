@@ -98,6 +98,21 @@
   animation: php-email-form-loading 1s linear infinite;
 }
 
+.form-group {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+  .form-group label{
+    position: absolute;
+    top: 0;
+    left: 1.2em;
+    background-color: var(--background-color); /* same as page bg to cover border */
+    padding: 0 4px;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+  }
+
 @keyframes php-email-form-loading {
   0% {
     transform: rotate(0deg);
