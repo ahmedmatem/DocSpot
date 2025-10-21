@@ -1,0 +1,22 @@
+<section class="time-slot p-0">
+    <div class="weekday text-center">ЧЕТВЪРТЪК</div>
+
+    <div class="full-date text-center fs-4">20 АВГУСТ 2025</div>
+
+    <hr class="w-100" />
+
+    <div class="slots">
+        @if(slots().length){
+            @for (slot of slots(); track slot.time) {
+                <button 
+                    type="button" 
+                    class="slot-item"
+                    [class.slot-item--unavailable]="!slot.awailable"
+                    [disabled]="!slot.awailable"
+                    (click)="pick(slot.time)">
+                    <span class="slot-text">{{ slot.time }}</span>
+                </button>
+            }
+        }
+    </div>
+</section>

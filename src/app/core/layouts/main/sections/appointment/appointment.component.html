@@ -12,7 +12,7 @@
             <div class="row">
                 <!-- left side -->
                 <div class="col-12 col-lg-6">
-                    <h6 class="border-bottom mb-4 pb-1"> Данни за пациента </h6>
+                    <h6 class="border-bottom mb-5 pb-1"> Данни за пациента </h6>
                     <div class="row">
                         <div class="col-12 col-lg-7 form-group">
                             <label for="name">Име на пациента</label>
@@ -33,7 +33,7 @@
                     </div>
 
                     <h6 class="border-bottom mb-4 pb-1"> Тип преглед </h6>
-                    <div class="row">
+                    <div class="row mb-5">
                         <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
 
                             <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
@@ -60,18 +60,18 @@
 
                 <!-- right side -->
                 <div class="col-12 col-lg-6">
-                    <h6 class="border-bottom mb-4 pb-1"> Дата и час </h6>
+                    <h6 class="border-bottom mb-5 pb-1"> Дата и час </h6>
                     <div class="row">
                         <div class="col-12 col-lg-6 justify-content-center d-flex">
-                            <mat-card class="demo-inline-calendar-card">
+                            <mat-card class="demo-inline-calendar-card mb-5">
                                 <mat-calendar 
                                     [minDate]="minDate" 
                                     [maxDate]="maxDate"
-                                    [(selected)]="selected"></mat-calendar>
+                                    [(selected)]="selectedDate"></mat-calendar>
                             </mat-card>
                         </div>
-                        <div class="col-12 col-lg-6 justify-content-center d-flex">
-                            ...
+                        <div class="col-12 col-lg-6 justify-content-center">
+                            <app-time-slot [date]="selectedDate()"></app-time-slot>
                         </div>
                     </div>
                 </div>
