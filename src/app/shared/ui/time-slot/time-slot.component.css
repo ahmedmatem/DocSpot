@@ -24,3 +24,10 @@
     color: #9e9e9e;
     cursor: not-allowed;
 }
+
+/* selected look */
+.slot-item--selected {
+  background-color: color-mix(in srgb, var(--heading-color, var(--accent-color)), white 80%);
+  border: 2px solid var(--heading-color, var(--accent-color));
+  /* box-shadow: 0 0 0 2px color-mix(in srgb, var(--heading-color, var(--accent-color)), transparent 70%); */
+}

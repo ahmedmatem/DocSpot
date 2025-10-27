@@ -1,4 +1,4 @@
-import { Component, input, Input, output } from '@angular/core';
+import { Component, input, Input, output, signal } from '@angular/core';
 
 type Slot = {time: string, awailable: boolean};
 
@@ -9,6 +9,8 @@ type Slot = {time: string, awailable: boolean};
   styleUrl: './time-slot.component.css'
 })
 export class TimeSlotComponent {
+  readonly selectedSlot = signal<string | null>(null);
+
   date = input.required<Date>();
   slots = input<Slot[]>([
     {time: '09:00', awailable: true},
@@ -21,9 +23,10 @@ export class TimeSlotComponent {
     {time: '04:00', awailable: false},
   ]);
 
-  slotSelected = output<{time: string, date: Date}>();
+  // slotSelected = output<{time: string, date: Date}>();
 
   pick(time: string){
-    this.slotSelected.emit({time, date: this.date()});
+    this.selectedSlot.set(time);
+    // this.slotSelected.emit({time, date: this.date()});
   }
 }

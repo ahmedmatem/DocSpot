@@ -1,8 +1,8 @@
-export interface Appointment {
-  id: string;
-  date: Date;
-  timeSlot: string;
-  patientName: string;
-  doctorName: string;
-  status: 'booked' | 'cancelled' | 'completed';
+export type VisitType = 'PAID' | 'NHI_FIRST'| 'NHI_FOLLOWUP';
+
+export interface CreateAppointmentPayload{
+  visitType: VisitType;
+  date: string; // in 'yyyy-MM-dd', 'bg' format
+  time: string; // in HH:mm format
+  message?: string; // optional string
 }

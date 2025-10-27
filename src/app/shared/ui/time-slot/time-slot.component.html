@@ -12,6 +12,7 @@
                     type="button" 
                     class="slot-item"
                     [class.slot-item--unavailable]="!slot.awailable"
+                    [class.slot-item--selected]="selectedSlot() === slot.time"
                     [disabled]="!slot.awailable"
                     (click)="pick(slot.time)">
                     <span class="slot-text">{{ slot.time }}</span>

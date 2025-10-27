@@ -25,9 +25,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mat-calendar{
-  --mat-datepicker-calendar-date-today-outline-color: var(--accent-color);
+  --mat-datepicker-calendar-date-today-outline-color: var(--heading-color);
+  --mat-datepicker-calendar-date-selected-state-background-color: color-mix(in srgb, var(--heading-color, var(--accent-color)), white 88%);
+  --mat-datepicker-calendar-date-selected-state-text-color: var(--default-color);
 }
-.mat-calendar {
-  --mat-datepicker-calendar-date-selected-state-background-color: var(--accent-color);
-  --mat-datepicker-calendar-date-selected-state-text-color: #ffffff;
+
+.mat-calendar .mat-calendar-body-selected {
+  position: relative;
+  background-color: color-mix(in srgb, var(--heading-color, var(--accent-color)), white 80%);
+  border-radius: 50%;
 }
+
+  .mat-calendar .mat-calendar-body-selected::after {
+    content: "";
+    position: absolute;
+    inset: -1px;          /* how far the ring sits outside */
+    border: 2px solid var(--heading-color);
+    border-radius: 50%;
+    pointer-events: none;
+  }
