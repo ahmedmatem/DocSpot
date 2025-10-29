@@ -122,6 +122,19 @@
   max-height: 25px;
 }
 
+div[role="alert"] {
+  background-color: white;;
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  border-color: black;
+}
+  div[role="alert"] > i {
+    background-color: orange;
+    padding: 0.5em 1em;
+    color: white;
+    margin-right: 0.5em;
+  }
+
 @keyframes php-email-form-loading {
   0% {
     transform: rotate(0deg);

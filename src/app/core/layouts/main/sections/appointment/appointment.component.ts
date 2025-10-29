@@ -26,8 +26,8 @@ export class AppointmentComponent {
   private destroyRef = inject(DestroyRef);
   
   readonly today = new Date();
-  selectedDate: Date | null = null;
-  selectedTime: string | null = null;
+  selectedDate = signal<Date | null>(null);
+  selectedTime = signal<string | null>(null);
   
   minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()); // start of today
   maxDate = new Date(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate()); // +1 years, same month/day
@@ -48,16 +48,22 @@ export class AppointmentComponent {
 
   // MatCalendar two-way binding helper
   onDateSelected(d: Date){
-    this.selectedDate = d;
+    this.selectedDate.set(d);
   }
 
   // Hook up <app-time-slot> output to this
   onTimeSelected(time: string){
-    this.selectedTime = time;
+    this.selectedTime.set(time);
   }
 
   submit(){
     this.error.set(null);
+
+    if(!this.selectedTime()) {
+      console.log('no time selected');
+      this.error.set('Моля, изберете час за вашето посещение.');
+      return;
+    };
 
     // Collect native inputs with FormData
     const fd = new FormData(this.appointmentFormRef.nativeElement);
@@ -70,12 +76,12 @@ export class AppointmentComponent {
     const message = (fd.get('message') || '').toString().trim();
 
     const payload = {
-      name: name!,
-      email: email!,
-      phone: phone!,
+      patientName: name!,
+      patientEmail: email!,
+      patientPhone: phone!,
       visitType: visitType!,
-      date: formatDate(this.selectedDate!, 'yyyy-MM-dd', 'bg'),
-      time: this.selectedTime!,
+      appointmentDate: formatDate(this.selectedDate()!, 'yyyy-MM-dd', 'bg'),
+      appointmentTime: this.selectedTime()!,
       message: message?.trim() || undefined,
     };
     

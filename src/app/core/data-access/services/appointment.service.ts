@@ -7,11 +7,11 @@ import { CreateAppointmentPayload } from '../models/appointment.model';
   providedIn: 'root'
 })
 export class AppointmentService {
-  private baseUrl = environment.apiUrl + '/appointments';
+  private baseUrl = environment.apiUrl + '/appointments/';
 
   constructor(private http: HttpClient) { }
 
   create(payload: CreateAppointmentPayload ) {
-    return this.http.post<void>(this.baseUrl, payload);
+    return this.http.post<void>(this.baseUrl + "book", payload);
   }
 }

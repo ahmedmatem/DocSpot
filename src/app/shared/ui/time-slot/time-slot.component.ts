@@ -6,7 +6,7 @@ type Slot = {time: string, awailable: boolean};
   selector: 'app-time-slot',
   imports: [],
   templateUrl: './time-slot.component.html',
-  styleUrl: './time-slot.component.css'
+  styleUrl: './time-slot.component.css',
 })
 export class TimeSlotComponent {
   readonly selectedSlot = signal<string | null>(null);
