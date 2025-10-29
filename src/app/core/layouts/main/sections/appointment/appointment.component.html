@@ -8,7 +8,7 @@
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
+        <form #appointmentForm role="form" class="php-email-form">
             <div class="row">
                 <!-- left side -->
                 <div class="col-12 col-lg-6">
@@ -36,10 +36,10 @@
                     <div class="row mb-5">
                         <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
 
-                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="visitType" value="PAID" id="vbtn-radio1" autocomplete="off" checked>
                             <label class="btn btn-outline-success text-start opacity-75" for="vbtn-radio1">Платен преглед</label>
 
-                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="visitType" value="NHI_First" id="vbtn-radio2" autocomplete="off">
                             <label class="btn btn-outline-success text-start opacity-75" for="vbtn-radio2">
                                 <svg viewBox="0 0 190 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-3 icon">
                                     <path d="M50.6317 141.033H23.2209L25.8269 146.58C52.6891 203.761 133.756 204.509 161.669 147.834L154.7 141.033H136.581C117.396 171.293 73.7581 172.721 52.6365 143.78L50.6317 141.033Z" fill="#FF1111" stroke="#FF1111"></path><path d="M142.62 98.8665L168.173 124.257L168.458 115.766C168.879 103.223 165.891 90.8017 159.81 79.8237L142.62 98.8665Z" fill="#00B45E" stroke="#00B45E"></path><path d="M153.306 139.673L142.62 129.698C141.702 133.282 140.011 136.621 137.666 139.482L137.51 139.673H153.306Z" fill="#00B45E"></path><path d="M49.7026 139.673H22.7564C16.4899 123.656 16.5769 105.85 22.9996 89.895L23.221 89.3451H49.5959C40.987 104.867 40.9458 123.72 49.4867 139.279L49.7026 139.673Z" fill="#00B45E" stroke="#00B45E"></path><path d="M135.187 77.5567L134.722 53.0731L142.156 58.5139L148.195 64.4081L135.187 77.5567Z" fill="#E6E6E6" stroke="#E6E6E6"></path><path d="M72.4674 56.7003V44.005L74.0503 43.5739C86.094 40.2939 98.7956 40.2939 110.839 43.5739L112.422 44.005V56.7003H72.4674Z" fill="#E6E6E6"></path><path d="M72.4674 56.7003V44.005L74.0503 43.5739C86.094 40.2939 98.7956 40.2939 110.839 43.5739L112.422 44.005V56.7003H72.4674ZM72.4674 56.7003V69.3955" stroke="#E6E6E6"></path><path d="M23.6855 87.9849L50.0966 87.9849L50.1671 55.3401L49.2831 55.9463C38.6212 63.258 30.1924 73.3796 24.9312 85.1889L23.6855 87.9849Z" fill="#E6E6E6" stroke="#E6E6E6"></path><path d="M104.059 97.5063L91.051 110.655L110.564 130.605C107.913 134.629 103.62 137.279 98.8341 137.845L96.1445 138.163C92.7931 138.56 89.3954 138.186 86.2105 137.07L85.8883 136.957C77.9358 134.171 72.2143 127.165 71.0737 118.816H51.5609C52.9006 139.213 68.8351 155.64 89.179 157.626C93.4953 158.047 97.8548 157.794 102.093 156.875L105.039 156.236C119.759 153.044 131.318 141.65 134.722 126.977L104.059 97.5063Z" fill="#312783"></path><path d="M113.816 58.0605H73.8612V76.1965H91.9802L73.8612 94.7859L85.0113 105.214L113.816 77.5567V99.7733L176.071 160.076V133.778L140.762 98.8665L177 58.9673H155.629L133.793 80.7305L132.864 22.2418H113.816V58.0605Z" fill="#312783"></path><path d="M16.2521 90.2519V10H35.7649V24.0554H51.5609V10H71.0736V112.469H51.5609V43.0982H35.7649V58.0605C28.3949 65.8523 22.5284 74.939 18.4609 84.863L16.2521 90.2519Z" fill="#312783"></path>
@@ -47,7 +47,7 @@
                                 Първичен преглед по НЗОК
                             </label>
 
-                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
+                            <input type="radio" class="btn-check" name="visitType" value="NHI_FollowUp" id="vbtn-radio3" autocomplete="off">
                             <label class="btn btn-outline-success text-start opacity-75" for="vbtn-radio3">
                                 <svg viewBox="0 0 190 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-3 icon">
                                     <path d="M50.6317 141.033H23.2209L25.8269 146.58C52.6891 203.761 133.756 204.509 161.669 147.834L154.7 141.033H136.581C117.396 171.293 73.7581 172.721 52.6365 143.78L50.6317 141.033Z" fill="#FF1111" stroke="#FF1111"></path><path d="M142.62 98.8665L168.173 124.257L168.458 115.766C168.879 103.223 165.891 90.8017 159.81 79.8237L142.62 98.8665Z" fill="#00B45E" stroke="#00B45E"></path><path d="M153.306 139.673L142.62 129.698C141.702 133.282 140.011 136.621 137.666 139.482L137.51 139.673H153.306Z" fill="#00B45E"></path><path d="M49.7026 139.673H22.7564C16.4899 123.656 16.5769 105.85 22.9996 89.895L23.221 89.3451H49.5959C40.987 104.867 40.9458 123.72 49.4867 139.279L49.7026 139.673Z" fill="#00B45E" stroke="#00B45E"></path><path d="M135.187 77.5567L134.722 53.0731L142.156 58.5139L148.195 64.4081L135.187 77.5567Z" fill="#E6E6E6" stroke="#E6E6E6"></path><path d="M72.4674 56.7003V44.005L74.0503 43.5739C86.094 40.2939 98.7956 40.2939 110.839 43.5739L112.422 44.005V56.7003H72.4674Z" fill="#E6E6E6"></path><path d="M72.4674 56.7003V44.005L74.0503 43.5739C86.094 40.2939 98.7956 40.2939 110.839 43.5739L112.422 44.005V56.7003H72.4674ZM72.4674 56.7003V69.3955" stroke="#E6E6E6"></path><path d="M23.6855 87.9849L50.0966 87.9849L50.1671 55.3401L49.2831 55.9463C38.6212 63.258 30.1924 73.3796 24.9312 85.1889L23.6855 87.9849Z" fill="#E6E6E6" stroke="#E6E6E6"></path><path d="M104.059 97.5063L91.051 110.655L110.564 130.605C107.913 134.629 103.62 137.279 98.8341 137.845L96.1445 138.163C92.7931 138.56 89.3954 138.186 86.2105 137.07L85.8883 136.957C77.9358 134.171 72.2143 127.165 71.0737 118.816H51.5609C52.9006 139.213 68.8351 155.64 89.179 157.626C93.4953 158.047 97.8548 157.794 102.093 156.875L105.039 156.236C119.759 153.044 131.318 141.65 134.722 126.977L104.059 97.5063Z" fill="#312783"></path><path d="M113.816 58.0605H73.8612V76.1965H91.9802L73.8612 94.7859L85.0113 105.214L113.816 77.5567V99.7733L176.071 160.076V133.778L140.762 98.8665L177 58.9673H155.629L133.793 80.7305L132.864 22.2418H113.816V58.0605Z" fill="#312783"></path><path d="M16.2521 90.2519V10H35.7649V24.0554H51.5609V10H71.0736V112.469H51.5609V43.0982H35.7649V58.0605C28.3949 65.8523 22.5284 74.939 18.4609 84.863L16.2521 90.2519Z" fill="#312783"></path>
@@ -67,11 +67,12 @@
                                 <mat-calendar 
                                     [minDate]="minDate" 
                                     [maxDate]="maxDate"
+                                    (selectedChange)="onDateSelected($event)"
                                     [(selected)]="selectedDate"></mat-calendar>
                             </mat-card>
                         </div>
                         <div class="col-12 col-lg-6">
-                            <app-time-slot [date]="today"></app-time-slot>
+                            <app-time-slot [date]="today" (slotSelected)="onTimeSelected($event)" required=""></app-time-slot>
                         </div>
                     </div>
                 </div>

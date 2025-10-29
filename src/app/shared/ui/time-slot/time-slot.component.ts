@@ -23,10 +23,10 @@ export class TimeSlotComponent {
     {time: '04:00', awailable: false},
   ]);
 
-  // slotSelected = output<{time: string, date: Date}>();
+  slotSelected = output<string>();
 
   pick(time: string){
     this.selectedSlot.set(time);
-    // this.slotSelected.emit({time, date: this.date()});
+    this.slotSelected.emit(time);
   }
 }

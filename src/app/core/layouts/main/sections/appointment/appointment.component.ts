@@ -1,13 +1,12 @@
-import { Component, computed, DestroyRef, effect, inject, model, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, model, signal, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TimeSlotComponent } from "../../../../../shared/ui/time-slot/time-slot.component";
 import { formatDate } from '@angular/common';
-import { FormBuilder, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { CreateAppointmentPayload, VisitType } from '../../../../data-access/models/appointment.model';
 import { AppointmentService } from '../../../../data-access/services/appointment.service';
-import { finalize, takeUntil } from 'rxjs';
+import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { VisitType } from '../../../../data-access/models/appointment.model';
 
 @Component({
   standalone: true,
@@ -21,12 +20,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './appointment.component.css'
 })
 export class AppointmentComponent {
-  private fb: NonNullableFormBuilder = inject(FormBuilder).nonNullable;
+  @ViewChild('appointmentForm') appointmentFormRef!: ElementRef<HTMLFormElement>;
+
   private appointmentService = inject(AppointmentService);
   private destroyRef = inject(DestroyRef);
   
   readonly today = new Date();
-  readonly selectedDate = model<Date | null>(null);
+  selectedDate: Date | null = null;
+  selectedTime: string | null = null;
   
   minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()); // start of today
   maxDate = new Date(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate()); // +1 years, same month/day
@@ -36,37 +37,45 @@ export class AppointmentComponent {
   sent = signal(false);
   error = signal<string | null>(null);
 
-  // Typed reactive form
-  readonly form = this.fb.group({
-    visitType: this.fb.control<VisitType>('PAID', {validators: [Validators.required]}),
-    date: this.fb.control<Date | null>(null, {validators: [Validators.required]}),
-    time: this.fb.control<string | null>(null, {validators: [Validators.required]}),
-    message: this.fb.control<string>('', {validators: []}),
-  });
+  private submitHandler = (e: Event) => {
+    e.preventDefault();
+    this.submit();
+  }
+
+  ngAfterViewInit(): void {
+    this.appointmentFormRef.nativeElement.addEventListener('submit', this.submitHandler);
+  }
 
   // MatCalendar two-way binding helper
   onDateSelected(d: Date){
-    this.form.patchValue({date: d});
+    this.selectedDate = d;
   }
 
   // Hook up <app-time-slot> output to this
   onTimeSelected(time: string){
-    this.form.patchValue({time});
+    this.selectedTime = time;
   }
 
-  suybmit(){
+  submit(){
     this.error.set(null);
-    if(this.form.invalid){
-      this.form.markAllAsTouched();
-      return;
-    }
-    const {visitType, date, time, message} = this.form.getRawValue();
-    console.log('submitting appointment:', {visitType, date, time, message});
+
+    // Collect native inputs with FormData
+    const fd = new FormData(this.appointmentFormRef.nativeElement);
+
+    // Read values (FormData.get returns FormDataEntryValue | null)
+    const name = (fd.get('name') || '').toString().trim();
+    const phone = (fd.get('phone') || '').toString().trim();
+    const email = (fd.get('email') || '').toString().trim();
+    const visitType = (fd.get('visitType') || '').toString().trim() as VisitType;
+    const message = (fd.get('message') || '').toString().trim();
 
     const payload = {
-      visitType,
-      date: formatDate(date!, 'yyyy-MM-dd', 'bg'),
-      time: time!,
+      name: name!,
+      email: email!,
+      phone: phone!,
+      visitType: visitType!,
+      date: formatDate(this.selectedDate!, 'yyyy-MM-dd', 'bg'),
+      time: this.selectedTime!,
       message: message?.trim() || undefined,
     };
     
@@ -87,20 +96,4 @@ export class AppointmentComponent {
     });
     
   }
-
-  // derive a formatted label (auto-updates when selection changes)
-  readonly selectedDateLabel = computed(() => {
-    this.selectedDate ? formatDate(this.selectedDate()!, 'fullDate', 'bg') : '--';
-  });
-
-  // load slots when data changes
-  readonly onDateChanch = effect(() => {
-    const date = this.selectedDate();
-    if(date){
-      // call a service, refetch data, etc.
-      // this.appointmentService.loadSlotsFor(d);
-      console.log('selected:', date);
-    }
-  });
-
 }
