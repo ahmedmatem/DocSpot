@@ -1,0 +1,23 @@
+<div class="container py-5" style="max-width:420px">
+    <h3 class="mb-3">Админ вход</h3>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3">
+        <label class="form-label">Имейл</label>
+        <input class="form-control" formControlName="email" type="email" />
+        <div class="text-danger small" *ngIf="submitted && form.controls.email.invalid">
+            Моля, въведете валиден имейл.
+        </div>
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Парола</label>
+        <input class="form-control" formControlName="password" type="password" />
+        <div class="text-danger small" *ngIf="submitted && form.controls.password.invalid">
+            Паролата е задължителна.
+        </div>
+        </div>
+
+        <button class="btn btn-primary w-100" [disabled]="form.pending">Вход</button>
+        <div class="text-danger small mt-2" *ngIf="error">{{ error }}</div>
+    </form>
+</div>

@@ -6,7 +6,8 @@ import { LocaleDateAdapter } from './core/date/LocaleDateAdapter';
 import { routes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeBg from '@angular/common/locales/bg';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/auth/auth.interceptor';
 
 registerLocaleData(localeBg);
 
@@ -31,6 +32,6 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'bg' }, // 🇧🇬 sets Bulgarian locale globally
     { provide: DateAdapter, useClass: LocaleDateAdapter }, // use custom date adapter
     { provide: MAT_DATE_FORMATS, useValue: BG_MONTH_YEAR_FORMATS },
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
   ]
 };

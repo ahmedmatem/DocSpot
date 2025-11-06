@@ -5,15 +5,18 @@ import { ScrollTopComponent } from "./core/layouts/scroll-top/scroll-top.compone
 import { FooterComponent } from "./core/layouts/footer/footer.component";
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   standalone: true,
   selector: 'app-root',
   imports: [
-    HeaderComponent, 
-    MainComponent, 
-    ScrollTopComponent, 
-    FooterComponent],
+    HeaderComponent,
+    MainComponent,
+    ScrollTopComponent,
+    FooterComponent,
+    RouterOutlet
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
