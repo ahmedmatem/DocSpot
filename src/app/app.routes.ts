@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.gard';
 import { LoginComponent } from './features/auth/login/login.component';
+import { PublicLayoutComponent } from './features/public/layout/public-layout/public-layout.component';
 
 export const routes: Routes = [
-    {path: 'login', component: LoginComponent},
+    { path: '', component: PublicLayoutComponent },
+    { path: 'login', component: LoginComponent },
     {
         path: 'admin',
         canActivate: [authGuard],

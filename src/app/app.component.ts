@@ -1,8 +1,8 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { HeaderComponent } from "./core/layouts/header/header.component";
-import { MainComponent } from "./core/layouts/main/main.component";
-import { ScrollTopComponent } from "./core/layouts/scroll-top/scroll-top.component";
-import { FooterComponent } from "./core/layouts/footer/footer.component";
+import { HeaderComponent } from "./features/public/header/header.component";
+import { MainComponent } from "./features/public/main/main.component";
+import { ScrollTopComponent } from "./features/public/scroll-top/scroll-top.component";
+import { FooterComponent } from "./features/public/footer/footer.component";
 import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
 import { RouterOutlet } from "@angular/router";
@@ -11,10 +11,6 @@ import { RouterOutlet } from "@angular/router";
   standalone: true,
   selector: 'app-root',
   imports: [
-    HeaderComponent,
-    MainComponent,
-    ScrollTopComponent,
-    FooterComponent,
     RouterOutlet
 ],
   templateUrl: './app.component.html',

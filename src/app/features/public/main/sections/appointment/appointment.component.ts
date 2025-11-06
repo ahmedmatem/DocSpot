@@ -3,10 +3,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TimeSlotComponent } from "../../../../../shared/ui/time-slot/time-slot.component";
 import { formatDate } from '@angular/common';
-import { AppointmentService } from '../../../../data-access/services/appointment.service';
+import { AppointmentService } from '../../../../../core/data-access/services/appointment.service';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VisitType } from '../../../../data-access/models/appointment.model';
+import { VisitType } from '../../../../../core/data-access/models/appointment.model';
 
 @Component({
   standalone: true,
