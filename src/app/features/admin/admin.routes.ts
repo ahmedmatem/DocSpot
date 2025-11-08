@@ -11,6 +11,11 @@ export const ADMIN_ROUTES: Routes = [
         canActivate: [adminGuard],
         children: [
             { path: '', component: AdminDashboardComponent },
+            { 
+                path: 'schedule', 
+                loadComponent: () => import('./pages/admin-week-schedule/admin-week-schedule.component')
+                    .then(m => m.AdminWeekScheduleComponent) 
+            },
             // { path: 'users', loadComponent: () => import('./pages/users.component').then(m => m.UsersComponent) },
             // add more children here
         ],
