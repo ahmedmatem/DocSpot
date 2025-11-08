@@ -135,6 +135,32 @@ div[role="alert"] {
     margin-right: 0.5em;
   }
 
+
+/* Background + text for the inline calendar only in this card */
+.demo-inline-calendar-card .mat-calendar {
+  background: var(--background-color, #fff7ed);  /* your theme token or any color */
+  color: var(--default-color, #5a3a1e);
+  border-radius: 12px; /* optional */
+}
+
+/* Header strip */
+.demo-inline-calendar-card .mat-calendar-header {
+  background: color-mix(in srgb, var(--surface-color, #fff7ed), black 6%);
+}
+
+/* Keep your existing token overrides and add a container bg var if supported */
+.demo-inline-calendar-card .mat-calendar {
+  --mat-datepicker-calendar-date-today-outline-color: var(--heading-color);
+  --mat-datepicker-calendar-date-selected-state-background-color: color-mix(in srgb, var(--heading-color, var(--accent-color)), white 88%);
+  --mat-datepicker-calendar-date-selected-state-text-color: var(--default-color);
+
+  /* Some versions honor these: */
+  --mat-datepicker-calendar-container-background-color: var(--surface-color, #fff7ed);
+  --mat-datepicker-calendar-container-text-color: var(--default-color, #5a3a1e);
+}
+
+
+
 @keyframes php-email-form-loading {
   0% {
     transform: rotate(0deg);
