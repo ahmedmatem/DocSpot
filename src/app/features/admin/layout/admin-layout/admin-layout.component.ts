@@ -13,6 +13,6 @@ export class AdminLayoutComponent {
 
   logout() {
     this.auth.logout();
-    location.assign ('/login');
+    location.assign ('/');
   }
 }

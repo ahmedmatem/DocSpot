@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 type LogintDto = { 
   email: string; 
@@ -25,10 +26,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(dto: LogintDto) {
-    return this.http.post<LoginResponse>('/api/auth/login', dto);
+    return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, dto);
   }
 
   handleLogin(res: LoginResponse) {
+    console.log('Handling login, storing tokens and user data', res);
     localStorage.setItem(this.ACCESS_KEY, res.accessToken);
     localStorage.setItem(this.USER_KEY, JSON.stringify(res.user));
     if (res.refreshToken) {
