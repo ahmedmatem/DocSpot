@@ -1,8 +1,11 @@
 <form [formGroup]="form">
   <div formArrayName="intervals">
-    @for (g of intervalsFA.controls; track $index; let i = $index) {
+    @for (g of intervalsFA.controls; track trackById($index, g); let i = $index) {
       <div [formGroupName]="i" class="input-group mb-1">
-        <input class="form-control" formControlName="interval" placeholder="08:00-12:00">
+        <input class="form-control"
+              (change)="onIntervalChange()" 
+              formControlName="interval" 
+              placeholder="08:00-12:00">
         <button class="btn btn-sm btn-outline-secondary" type="button" (click)="deleteInterval(i)">
           <i class="fa-solid fa-xmark"></i>
         </button>

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { Component, inject, input, output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+type Payload = { day: string, intervals: string[] }
 
 @Component({
   selector: 'app-dayly-schedule',
@@ -12,6 +13,12 @@ import { RouterLink } from "@angular/router";
 export class DaylyScheduleComponent {
   private fb = inject(FormBuilder);
 
+  // Identify the day: 'mon' | 'tue' | ...
+  dayKey = input<string>('mon');
+
+  // Notify parent which day changed and all current intervals for that day
+  intervalChange = output<Payload>();
+
   form = this.fb.group({
     intervals: this.fb.array([])
   });
@@ -21,10 +28,25 @@ export class DaylyScheduleComponent {
   }
 
   addInterval() {
-    this.intervalsFA.push(this.fb.group({ interval: ''} ));
+    this.intervalsFA.push(this.fb.group({ id: crypto.randomUUID(), interval: ''} ));
   }
 
   deleteInterval(i: number) {
     this.intervalsFA.removeAt(i);
+    this.intervalChange.emit({ day: this.dayKey(), intervals: this.currentIntervals() });
   }
+
+  onIntervalChange() {
+    console.log('Current intervals', this.currentIntervals());
+    this.intervalChange.emit({ day: this.dayKey(), intervals: this.currentIntervals() });
+  }  
+
+  private currentIntervals(): string[] {
+    return (this.intervalsFA.getRawValue() as { interval: string }[])
+      .map(r => (r.interval || '').trim())
+      .filter(v => v.length > 0);
+  }
+
+  // helper for template trackBy
+  trackById = (_: number, g: any) => g.get('id')?.value;
 }

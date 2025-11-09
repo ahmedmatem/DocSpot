@@ -13,8 +13,9 @@
                 </h2>
                 <div id="collapseMon" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="mon" (intervalChange)="onIntervalChange($event)" />
                     </div>
+                    <p>{{ interval() }}</p>
                 </div>
             </div>
             <div class="accordion-item">
@@ -25,7 +26,7 @@
                 </h2>
                 <div id="collapseTue" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="tue" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -37,7 +38,7 @@
                 </h2>
                 <div id="collapseWed" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="wed" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -49,7 +50,7 @@
                 </h2>
                 <div id="collapseThu" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="thu" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                 </h2>
                 <div id="collapseFri" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="fri" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -73,7 +74,7 @@
                 </h2>
                 <div id="collapseSat" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="sat" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -85,7 +86,7 @@
                 </h2>
                 <div id="collapseSun" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <app-dayly-schedule/>
+                        <app-dayly-schedule dayKey="sun" (intervalChange)="onIntervalChange($event)" />
                     </div>
                 </div>
             </div>
@@ -114,7 +115,12 @@
                         [slotLengthMinutes]="20">
                     </app-dayly-schedule-preview> 
                 </td>
-                <td>Mark</td>
+                <td>
+                    <app-dayly-schedule-preview
+                        [intervals]="[{start:'08:00', end:'12:00'}, {start:'13:00', end:'17:00'}]"
+                        [slotLengthMinutes]="20">
+                    </app-dayly-schedule-preview> 
+                </td>
                 <td>Mark</td>
                 <td>Mark</td>
                 <td>Mark</td>

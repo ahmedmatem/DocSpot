@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, signal } from '@angular/core';
 import { DaylyScheduleComponent } from "./dayly-schedule/dayly-schedule.component";
 import { DaylySchedulePreviewComponent } from "./dayly-schedule-preview/dayly-schedule-preview.component";
+
+type WeekModel = Record<string, string[]>; // {mon: [...], tue: [...], ...}
 
 @Component({
   selector: 'app-admin-week-schedule',
@@ -10,5 +11,12 @@ import { DaylySchedulePreviewComponent } from "./dayly-schedule-preview/dayly-sc
   styleUrl: './admin-week-schedule.component.css'
 })
 export class AdminWeekScheduleComponent {
-  
+  week = signal<WeekModel>({ mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] });
+  interval = signal<string>('');
+
+  onIntervalChange(payload: { day: string, intervals: string[] }) {
+    this.week.update(wm => ({ ...wm, [payload.day]: payload.intervals }));
+    console.log('Updated', payload.day, '→', this.week()[payload.day]);
+  }
+
 }
