@@ -1,0 +1,25 @@
+.week-schedule-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 1em;
+}
+
+.dayly-schedules {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 30ch;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 6px 12px rgba(0,0,0,.08);
+    padding: 1em;
+}
+
+.preview-schedule {
+    flex: 1 1 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 6px 12px rgba(0,0,0,.08);
+    padding: 1em;
+}
+
+.accordion-body {
+    padding: 1em;
+}

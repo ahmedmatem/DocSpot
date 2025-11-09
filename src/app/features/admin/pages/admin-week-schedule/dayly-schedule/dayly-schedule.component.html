@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <div formArrayName="intervals">
+    @for (g of intervalsFA.controls; track $index; let i = $index) {
+      <div [formGroupName]="i" class="input-group mb-1">
+        <input class="form-control" formControlName="interval" placeholder="08:00-12:00">
+        <button class="btn btn-sm btn-outline-secondary" type="button" (click)="deleteInterval(i)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    }
+  </div>
+</form>
+
+<p class="fs-7 m-0">
+    <a href="./admin/schedule#" (click)="addInterval()" 
+        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            + Добави интервал
+    </a>
+</p>

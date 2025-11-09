@@ -1,1 +1,109 @@
-<p>admin-week-schedule works!</p>
+<h3>Седмично разписание</h3>
+
+<div class="week-schedule-container">
+
+    <div class="dayly-schedules">
+        <h5>Разписание по дни</h5>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMon" aria-expanded="true" aria-controls="collapseOne">
+                        ПОНЕДЕЛНИК
+                    </button>
+                </h2>
+                <div id="collapseMon" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTue" aria-expanded="false" aria-controls="collapseTwo">
+                        ВТОРНИК
+                    </button>
+                </h2>
+                <div id="collapseTue" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWed" aria-expanded="false" aria-controls="collapseTwo">
+                        СРЯДА
+                    </button>
+                </h2>
+                <div id="collapseWed" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThu" aria-expanded="false" aria-controls="collapseTwo">
+                        ЧЕТВЪРТЪК
+                    </button>
+                </h2>
+                <div id="collapseThu" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFri" aria-expanded="false" aria-controls="collapseTwo">
+                        ПЕТЪК
+                    </button>
+                </h2>
+                <div id="collapseFri" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSat" aria-expanded="false" aria-controls="collapseTwo">
+                        СЪБОТА
+                    </button>
+                </h2>
+                <div id="collapseSat" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSun" aria-expanded="false" aria-controls="collapseTwo">
+                        НЕДЕЛЯ
+                    </button>
+                </h2>
+                <div id="collapseSun" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <app-dayly-schedule/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <p>Разписание по дни</p> -->
+        <!-- <app-dayly-schedule day="Понеделник"></app-dayly-schedule>
+        <app-dayly-schedule day="Вторник"></app-dayly-schedule>
+        <app-dayly-schedule day="Сряда"></app-dayly-schedule>
+        <app-dayly-schedule day="Четвъртък"></app-dayly-schedule>
+        <app-dayly-schedule day="Петък"></app-dayly-schedule>
+        <app-dayly-schedule day="Събота"></app-dayly-schedule>
+        <app-dayly-schedule day="Неделя"></app-dayly-schedule> -->
+        
+        <!-- <p>Добавете времеви интервал за всеки ден. Изберете дължина на слота, за да прегледате генерираните слотове.</p> -->
+    </div>
+
+    <div class="preview-schedule">
+        <p>Preview</p>
+    </div>
+
+</div>
