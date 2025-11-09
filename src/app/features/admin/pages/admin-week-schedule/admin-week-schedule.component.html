@@ -90,20 +90,39 @@
                 </div>
             </div>
         </div>
-        <!-- <p>Разписание по дни</p> -->
-        <!-- <app-dayly-schedule day="Понеделник"></app-dayly-schedule>
-        <app-dayly-schedule day="Вторник"></app-dayly-schedule>
-        <app-dayly-schedule day="Сряда"></app-dayly-schedule>
-        <app-dayly-schedule day="Четвъртък"></app-dayly-schedule>
-        <app-dayly-schedule day="Петък"></app-dayly-schedule>
-        <app-dayly-schedule day="Събота"></app-dayly-schedule>
-        <app-dayly-schedule day="Неделя"></app-dayly-schedule> -->
-        
-        <!-- <p>Добавете времеви интервал за всеки ден. Изберете дължина на слота, за да прегледате генерираните слотове.</p> -->
     </div>
 
     <div class="preview-schedule">
-        <p>Preview</p>
+        <h5>Преглед</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Понеделник</th>
+                <th scope="col">Вторник</th>
+                <th scope="col">Сряда</th>
+                <th scope="col">Четвъртък</th>
+                <th scope="col">Петък</th>
+                <th scope="col">Събота</th>
+                <th scope="col">Неделя</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>
+                    <app-dayly-schedule-preview
+                        [intervals]="[{start:'08:00', end:'12:00'}, {start:'13:00', end:'17:00'}]"
+                        [slotLengthMinutes]="20">
+                    </app-dayly-schedule-preview> 
+                </td>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
