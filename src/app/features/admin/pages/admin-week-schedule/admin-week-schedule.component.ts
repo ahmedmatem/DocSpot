@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { DaylyScheduleComponent } from "./dayly-schedule/dayly-schedule.component";
-import { DaylySchedulePreviewComponent } from "./dayly-schedule-preview/dayly-schedule-preview.component";
+import { DaylySchedulePreviewComponent, TimeInterval } from "./dayly-schedule-preview/dayly-schedule-preview.component";
 
 type WeekModel = Record<string, string[]>; // {mon: [...], tue: [...], ...}
 
@@ -16,7 +16,13 @@ export class AdminWeekScheduleComponent {
 
   onIntervalChange(payload: { day: string, intervals: string[] }) {
     this.week.update(wm => ({ ...wm, [payload.day]: payload.intervals }));
-    console.log('Updated', payload.day, '→', this.week()[payload.day]);
+    // console.log('Updated', payload.day, '→', this.week()[payload.day]);
   }
 
+  dayIntervals(arr: string[]): TimeInterval[] {
+    return arr.map(s => {
+      const [start, end] = s.split('-').map(t => t.trim());
+      return { start, end };
+    });
+  }
 }

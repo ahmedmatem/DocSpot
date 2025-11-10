@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-type Payload = { day: string, intervals: string[] }
+type PayloadUpdate = { day: string, intervals: string[] }
 
 @Component({
   selector: 'app-dayly-schedule',
@@ -17,7 +17,7 @@ export class DaylyScheduleComponent {
   dayKey = input<string>('mon');
 
   // Notify parent which day changed and all current intervals for that day
-  intervalChange = output<Payload>();
+  intervalChange = output<PayloadUpdate>();
 
   form = this.fb.group({
     intervals: this.fb.array([])
