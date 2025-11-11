@@ -1,0 +1,1 @@
+export type WeekModel = Record<string, string[]>; // {mon: [...], tue: [...], ...}

@@ -26,7 +26,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(dto: LogintDto) {
-    return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, dto);
+    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/auth/login`, dto);
   }
 
   handleLogin(res: LoginResponse) {

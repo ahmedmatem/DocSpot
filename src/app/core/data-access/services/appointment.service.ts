@@ -7,7 +7,7 @@ import { CreateAppointmentPayload } from '../models/appointment.model';
   providedIn: 'root'
 })
 export class AppointmentService {
-  private baseUrl = environment.apiUrl + '/appointments/';
+  private baseUrl = environment.apiBaseUrl + '/appointments/';
 
   constructor(private http: HttpClient) { }
 

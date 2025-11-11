@@ -5,8 +5,8 @@ import { MatDatepickerModule, MatCalendar } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _MatInternalFormField, MatNativeDateModule } from '@angular/material/core';
-
-type WeekModel = Record<string, string[]>; // {mon: [...], tue: [...], ...}
+import { WeekScheduleService } from '../../data-access/services/week-schedule.service';
+import { WeekModel } from '../../data-access/models/week-schedule.model';
 
 @Component({
   selector: 'app-admin-week-schedule',
@@ -31,6 +31,12 @@ export class AdminWeekScheduleComponent {
   minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()); // start of today
   maxDate = new Date(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate()); // +1 years, same month/day
 
+  saving = false;
+  saved = false;
+  error = '';
+
+  constructor(private weekScheduleService: WeekScheduleService) {}
+
   // MatCalendar two-way binding helper
   onDateSelected(d: Date){
     this.selectedDate.set(d);
@@ -49,6 +55,14 @@ export class AdminWeekScheduleComponent {
   }
 
   saveWeekSchedule(){
-    
+    this.error = '';
+    this.saved = false;
+
+    this.saving = true;
+    const dto = { startDate: this.selectedDate()!, week: this.week() };
+    this.weekScheduleService.save(dto).subscribe({
+      next: _ => { this.saved = true; this.saving = false; },
+      error: e => { this.error = e?.error ?? 'Неуспешен запис'; this.saving = false; }
+    });
   }
 }
