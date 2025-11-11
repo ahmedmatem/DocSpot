@@ -118,6 +118,7 @@
                         [matDatepicker]="picker"
                         [min]="minDate"
                         [max]="maxDate"
+                        [value]="selectedDate()"
                         (dateChange)="onDateSelected($event.value)"
                         required
                     />

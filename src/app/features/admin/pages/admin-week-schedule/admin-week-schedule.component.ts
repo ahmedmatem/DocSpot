@@ -65,10 +65,21 @@ export class AdminWeekScheduleComponent {
     this.saved = false;
 
     this.saving = true;
-    const dto = { startDate: this.selectedDate()!, week: this.week() };
+    const dto = { 
+      startDate: this.toYMD(this.selectedDate()!),
+      slotLength: this.slotLen(),
+      weekSchedule: this.week() 
+    };
     this.weekScheduleService.save(dto).subscribe({
       next: _ => { this.saved = true; this.saving = false; },
       error: e => { this.error = e?.error ?? 'Неуспешен запис'; this.saving = false; }
     });
+  }  
+
+  private toYMD(d: Date): string {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`; // "2025-11-11"
   }
 }

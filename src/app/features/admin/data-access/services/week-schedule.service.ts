@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { WeekModel } from '../models/week-schedule.model';
 
-export type weekSchedulePayload = { startDate: Date, week: WeekModel }
+export type weekSchedulePayload = { startDate: string /**yyyy-mm-dd */, slotLength: number, weekSchedule: WeekModel }
 
 @Injectable({
   providedIn: 'root'
