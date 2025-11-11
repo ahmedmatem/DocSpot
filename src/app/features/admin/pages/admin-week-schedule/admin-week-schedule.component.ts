@@ -24,6 +24,7 @@ import { WeekModel } from '../../data-access/models/week-schedule.model';
 export class AdminWeekScheduleComponent {
   week = signal<WeekModel>({ mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] });
   interval = signal<string>('');
+  slotLen = signal<number>(20);
 
   readonly today = new Date();
   selectedDate = signal<Date | null>(this.today);
@@ -36,6 +37,11 @@ export class AdminWeekScheduleComponent {
   error = '';
 
   constructor(private weekScheduleService: WeekScheduleService) {}
+
+  onSlotLenChanged(e: Event) {
+    const len = Number((e.target as HTMLInputElement).value);
+    this.slotLen.set(len);
+  }
 
   // MatCalendar two-way binding helper
   onDateSelected(d: Date){

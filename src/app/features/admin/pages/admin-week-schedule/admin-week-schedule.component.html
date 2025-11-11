@@ -4,6 +4,18 @@
 
     <div class="dayly-schedules">
         <h5>Разписание по дни</h5>
+
+        <label for="slot-len">Продължителност на прегледа</label>
+        <select id="slot-len" 
+          class="form-select mb-3 py-3"
+          [value]="slotLen()"
+          (change)="onSlotLenChanged($event)"
+          aria-label="Default select example">
+            <option value="15">15 мин</option>
+            <option value="20">20 мин</option>
+            <option value="30">30 мин</option>
+        </select>
+
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -143,41 +155,41 @@
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['mon'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> 
                 </td>
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['tue'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview>  
                 </td>
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['wed'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> 
                 </td>
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['thu'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> 
                 </td>
                 <td><app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['fri'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> </td>
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['sat'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> 
                 </td>
                 <td>
                     <app-dayly-schedule-preview
                         [intervals]="dayIntervals(week()['sun'])"
-                        [slotLengthMinutes]="20">
+                        [slotLengthMinutes]="slotLen()">
                     </app-dayly-schedule-preview> 
                 </td>
                 </tr>
