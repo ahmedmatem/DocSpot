@@ -92,8 +92,40 @@
         </div>
     </div>
 
-    <div class="preview-schedule">
+    <div class="preview-schedule">        
         <h5>Преглед</h5>
+        <div class="row">
+            <div class="col col-md-8 col-lg-9">
+                
+                <div>Начало на разписанието</div>
+                <mat-form-field appearance="outline" class="">
+                    <mat-label>Избери начало</mat-label>
+
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        [min]="minDate"
+                        [max]="maxDate"
+                        (dateChange)="onDateSelected($event.value)"
+                        required
+                    />
+
+                    <!-- calendar icon button -->
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker startView="month"></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+            <div class="col col-md-4 col-lg-3">
+                <button type="button" 
+                    (click)="saveWeekSchedule()"
+                    class="btn btn-sm btn-outline-success float-end">
+                    Запази
+                </button>
+            </div>
+        </div>
+
+        
         <table class="table">
             <thead>
                 <tr>
