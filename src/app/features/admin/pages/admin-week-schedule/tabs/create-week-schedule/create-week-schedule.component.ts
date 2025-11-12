@@ -1,15 +1,15 @@
 import { Component, signal } from '@angular/core';
-import { DaylyScheduleComponent } from "../../dayly-schedule/dayly-schedule.component";
-import { DaylySchedulePreviewComponent, TimeInterval } from "../../dayly-schedule-preview/dayly-schedule-preview.component";
 import { MatDatepickerModule, MatCalendar } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _MatInternalFormField, MatNativeDateModule } from '@angular/material/core';
 import { WeekScheduleService } from '../../../../data-access/services/week-schedule.service';
 import { WeekModel } from '../../../../data-access/models/week-schedule.model';
+import { DaylyScheduleComponent } from './dayly-schedule/dayly-schedule.component';
+import { DaylySchedulePreviewComponent, TimeInterval } from './dayly-schedule-preview/dayly-schedule-preview.component';
 
 @Component({
-  selector: 'app-admin-week-schedule',
+  selector: 'app-create-week-schedule',
   imports: [
     DaylyScheduleComponent,
     DaylySchedulePreviewComponent,
