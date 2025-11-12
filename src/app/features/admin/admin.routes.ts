@@ -17,7 +17,13 @@ export const ADMIN_ROUTES: Routes = [
                 // loadComponent: () => import('./pages/admin-week-schedule/admin-week-schedule.component')
                 //     .then(m => m.AdminWeekScheduleComponent)
                 component: WeekScheduleLayoutComponent,
-                children: []
+                children: [
+                    {
+                        path: 'create',
+                        loadComponent: () => import('./pages/admin-week-schedule/tabs/create-week-schedule/create-week-schedule.component')
+                            .then(m => m.CreateWeekScheduleComponent)
+                    }
+                ]
             },
             // { path: 'users', loadComponent: () => import('./pages/users.component').then(m => m.UsersComponent) },
             // add more children here

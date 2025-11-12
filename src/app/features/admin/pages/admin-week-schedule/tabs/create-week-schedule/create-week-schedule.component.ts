@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { DaylyScheduleComponent } from "./dayly-schedule/dayly-schedule.component";
-import { DaylySchedulePreviewComponent, TimeInterval } from "./dayly-schedule-preview/dayly-schedule-preview.component";
+import { DaylyScheduleComponent } from "../../dayly-schedule/dayly-schedule.component";
+import { DaylySchedulePreviewComponent, TimeInterval } from "../../dayly-schedule-preview/dayly-schedule-preview.component";
 import { MatDatepickerModule, MatCalendar } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _MatInternalFormField, MatNativeDateModule } from '@angular/material/core';
-import { WeekScheduleService } from '../../data-access/services/week-schedule.service';
-import { WeekModel } from '../../data-access/models/week-schedule.model';
+import { WeekScheduleService } from '../../../../data-access/services/week-schedule.service';
+import { WeekModel } from '../../../../data-access/models/week-schedule.model';
 
 @Component({
   selector: 'app-admin-week-schedule',
@@ -18,10 +18,10 @@ import { WeekModel } from '../../data-access/models/week-schedule.model';
     MatInputModule,
     MatNativeDateModule
 ],
-  templateUrl: './admin-week-schedule.component.html',
-  styleUrl: './admin-week-schedule.component.css'
+  templateUrl: './create-week-schedule.component.html',
+  styleUrl: './create-week-schedule.component.css'
 })
-export class AdminWeekScheduleComponent {
+export class CreateWeekScheduleComponent {
   week = signal<WeekModel>({ mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] });
   interval = signal<string>('');
   slotLen = signal<number>(20);

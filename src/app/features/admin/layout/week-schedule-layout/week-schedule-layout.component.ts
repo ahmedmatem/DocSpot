@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from "@angular/router";
+import { RouterOutlet, RouterLinkWithHref } from "@angular/router";
 
 @Component({
   selector: 'app-week-schedule-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLinkWithHref],
   templateUrl: './week-schedule-layout.component.html',
   styleUrl: './week-schedule-layout.component.css'
 })
