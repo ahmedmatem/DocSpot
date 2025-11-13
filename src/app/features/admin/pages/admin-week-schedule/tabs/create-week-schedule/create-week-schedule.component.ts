@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { MatDatepickerModule, MatCalendar } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _MatInternalFormField, MatNativeDateModule } from '@angular/material/core';
