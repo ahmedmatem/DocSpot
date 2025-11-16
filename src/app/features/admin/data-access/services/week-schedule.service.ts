@@ -9,7 +9,7 @@ export type weekSchedulePayload = { startDate: string /**yyyy-mm-dd */, slotLeng
 @Injectable({ providedIn: 'root' })
 export class WeekScheduleService {
   private readonly weeksSubject = new BehaviorSubject<weekSchedulePayload[] | null>(null);
-  readonly weeks$ = this.weeksSubject.asObservable;
+  readonly weeks$ = this.weeksSubject.asObservable();
 
   // quick lookup by startDate
   private readonly weeksByStartDate = new Map<string, weekSchedulePayload>();
@@ -45,6 +45,30 @@ export class WeekScheduleService {
     return this.weeksByStartDate.get(startDate);
   }
 
+  /** Get closest previous weekSchedule for current date/today */
+  getActiveWeekSchedule() : weekSchedulePayload | undefined {
+    const now = new Date();
+    // normalize "today" to midnight
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    let activeWeek: weekSchedulePayload | undefined;
+    let closestTime = -Infinity;
+
+    for(const startDateKey of this.weeksByStartDate.keys()) {
+      const startDate = this.parseYyyyMmDd(startDateKey);
+      const time = startDate.getTime();
+
+      // only consider weeks that start in the past or today
+      if (time <= today.getTime() && time > closestTime) {
+        activeWeek = this.weeksByStartDate.get(startDateKey);
+        closestTime = time;
+      }
+    }
+
+    return activeWeek;
+
+  }
+
   save(dto: weekSchedulePayload){
     const url = `${environment.apiAdminBaseUrl}/week-schedule/`;
     return this.http.post(url, dto); // returns Observable<any>
@@ -59,5 +83,14 @@ export class WeekScheduleService {
     this.weeksLoaded = false;
     this.weeksSubject.next(null);
     this.weeksByStartDate.clear();
+  }
+
+  private parseYyyyMmDd(dateStr: string): Date {
+    const [yearStr, monthStr, dayStr] = dateStr.split('-');
+    const day = Number(dayStr);
+    const month = Number(monthStr) - 1; // JS months are 0-based
+    const year = Number(yearStr);
+
+    return new Date(year, month, day);
   }
 }

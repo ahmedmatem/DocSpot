@@ -1,4 +1,3 @@
-import { Time } from '@angular/common';
 import { Component, computed, Input, signal } from '@angular/core';
 
 export type TimeInterval = { start: string; end: string }; // "HH:MM"
