@@ -1,5 +1,6 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, RouterLinkActive, RouterLink, Router } from "@angular/router";
+import { weekSchedulePayload, WeekScheduleService } from '../../data-access/services/week-schedule.service';
 
 type Tab = { label: string, start: string | 'current' };
 
@@ -10,11 +11,35 @@ type Tab = { label: string, start: string | 'current' };
   styleUrl: './week-schedule-layout.component.css'
 })
 export class WeekScheduleLayoutComponent {
+  weekScheduleService = inject(WeekScheduleService);
+
+  // observable – useful for list somewhere
+  weeks$ = this.weekScheduleService.weeks$;
+
+  // local cache for synchronous access
+  private weeks: weekSchedulePayload[] = [];
+
+  selectedWeek: weekSchedulePayload | undefined = undefined;
+  
   readonly starts = signal<string[]>([
-    '2025-10-02',
-    '2025-11-02',
-    '2025-12-10'
+    // ...this.weeks.map(wsp => wsp.startDate)
+    // '2025-10-02',
+    // '2025-11-02',
+    // '2025-12-10'
   ]);
+
+  ngOnInit() {
+    this.weekScheduleService.loadAll().subscribe(weeks => {
+      this.weeks = weeks ?? [];
+
+      // pick an initial week - active one
+      const activeWeek = this.weekScheduleService.getActiveWeekSchedule();
+      this.selectedWeek = activeWeek;
+
+      // now weeks are loaded, update the signal
+      this.starts.set(this.weeks.map(wsp => wsp.startDate));
+    });
+  }
 
   readonly tabs = computed<Tab[]>(() => [
     ...this.starts().map(d => ({
