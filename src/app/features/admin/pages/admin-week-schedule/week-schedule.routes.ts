@@ -1,10 +1,9 @@
-import { WeekScheduleComponent } from './tabs/week-schedule/week-schedule.component';
 import { AdminWeekScheduleComponent } from './admin-week-schedule.component';
 
 export const WEEK_SCHEDULE_ROUTES = [
     {
-        path: '',
-        loadComponent: () => import('./admin-week-schedule.component').then(m => m.AdminWeekScheduleComponent)
+        path: 'active',
+        component: AdminWeekScheduleComponent
     },
     {
         path: 'create',
@@ -13,6 +12,7 @@ export const WEEK_SCHEDULE_ROUTES = [
     },
     {
         path: ':start',
-        component: WeekScheduleComponent
+        loadComponent: () => import('./admin-week-schedule.component')
+            .then(m => m.AdminWeekScheduleComponent)
     }
 ];

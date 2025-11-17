@@ -1,1 +1,27 @@
-<p>week-schedule-table works!</p>
+@if(payload) {
+    <table class="table">
+        <thead>
+            <tr>
+                <td scope="col">Понеделник</td>
+                <td scope="col">Вторник</td>
+                <td scope="col">Сряда</td>
+                <td scope="col">Четвъртък</td>
+                <td scope="col">Петък</td>
+                <td scope="col">Събота</td>
+                <td scope="col">Неделя</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @for(dayKey of dayKeys; track $index) {
+                    <td>
+                        <app-dayly-schedule-preview
+                            [intervals]="toTimeIntervals(payload.weekSchedule[dayKey])"
+                            [slotLengthMinutes]="payload.slotLength">
+                        </app-dayly-schedule-preview> 
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}

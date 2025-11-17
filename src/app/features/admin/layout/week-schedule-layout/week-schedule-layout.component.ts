@@ -19,14 +19,11 @@ export class WeekScheduleLayoutComponent {
   // local cache for synchronous access
   private weeks: weekSchedulePayload[] = [];
 
+  private activeScheduleStartDate: string | null = null;
   selectedWeek: weekSchedulePayload | undefined = undefined;
   
-  readonly starts = signal<string[]>([
-    // ...this.weeks.map(wsp => wsp.startDate)
-    // '2025-10-02',
-    // '2025-11-02',
-    // '2025-12-10'
-  ]);
+  // tabs by week-schedules start dates
+  readonly starts = signal<string[]>([]);
 
   ngOnInit() {
     this.weekScheduleService.loadAll().subscribe(weeks => {
@@ -34,6 +31,7 @@ export class WeekScheduleLayoutComponent {
 
       // pick an initial week - active one
       const activeWeek = this.weekScheduleService.getActiveWeekSchedule();
+      this.activeScheduleStartDate = activeWeek?.startDate ?? '';
       this.selectedWeek = activeWeek;
 
       // now weeks are loaded, update the signal
@@ -43,10 +41,11 @@ export class WeekScheduleLayoutComponent {
 
   readonly tabs = computed<Tab[]>(() => [
     ...this.starts().map(d => ({
-      label: `От ${d.replaceAll('-', '/')}`,
+      label: d === this.activeScheduleStartDate
+        ? `${d.replaceAll('-', '/')}-Актуално`
+        : `От ${d.replaceAll('-', '/')}`,
       start: d
-    })),
-    { label: 'Актуално', start: 'current'}
+    }))
   ]);
 
   constructor(private router: Router){}
@@ -54,9 +53,9 @@ export class WeekScheduleLayoutComponent {
   // track function used by @for
   trackByTab = (index: number, tab: Tab) => tab.start;
 
-  addTab(startDateISO: string) {
-    this.starts.update(arr => [...arr, startDateISO]);
-    // optionally navigate to it, if you want:
-    this.router.navigate(['/admin/schedule', startDateISO]);
-  }
+  // addTab(startDateISO: string) {
+  //   this.starts.update(arr => [...arr, startDateISO]);
+  //   // optionally navigate to it, if you want:
+  //   this.router.navigate(['/admin/schedule', startDateISO]);
+  // }
 }
