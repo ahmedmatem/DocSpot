@@ -53,9 +53,9 @@ export class WeekScheduleLayoutComponent {
   // track function used by @for
   trackByTab = (index: number, tab: Tab) => tab.start;
 
-  // addTab(startDateISO: string) {
-  //   this.starts.update(arr => [...arr, startDateISO]);
-  //   // optionally navigate to it, if you want:
-  //   this.router.navigate(['/admin/schedule', startDateISO]);
-  // }
+  addTab(startDateISO: string) {
+    this.starts.update(arr => [...arr, startDateISO]);
+    // optionally navigate to it, if you want:
+    this.router.navigate(['/admin/schedule', startDateISO]);
+  }
 }
