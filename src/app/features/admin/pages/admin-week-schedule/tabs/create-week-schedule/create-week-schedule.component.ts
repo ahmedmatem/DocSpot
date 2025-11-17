@@ -7,6 +7,7 @@ import { WeekScheduleService } from '../../../../data-access/services/week-sched
 import { WeekModel } from '../../../../data-access/models/week-schedule.model';
 import { DaylyScheduleComponent } from './dayly-schedule/dayly-schedule.component';
 import { DaylySchedulePreviewComponent, TimeInterval } from './dayly-schedule-preview/dayly-schedule-preview.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-week-schedule',
@@ -36,7 +37,7 @@ export class CreateWeekScheduleComponent {
   saved = false;
   error = '';
 
-  constructor(private weekScheduleService: WeekScheduleService) {}
+  constructor(private weekScheduleService: WeekScheduleService, private router: Router) {}
 
   onSlotLenChanged(e: Event) {
     const len = Number((e.target as HTMLInputElement).value);
@@ -71,8 +72,17 @@ export class CreateWeekScheduleComponent {
       weekSchedule: this.week() 
     };
     this.weekScheduleService.save(dto).subscribe({
-      next: _ => { this.saved = true; this.saving = false; },
-      error: e => { this.error = e?.error ?? 'Неуспешен запис'; this.saving = false; }
+      next: saved => { 
+        this.saved = true; 
+        this.saving = false; 
+
+        // 1) tabs get updated via service.weeks$ → layout reacts
+        // 2) navigate to the new week tab
+        this.router.navigate(['/admin/schedule', saved.startDate]);
+      },
+      error: e => { 
+        this.error = e?.error ?? 'Неуспешен запис'; this.saving = false;
+      }
     });
   }  
 

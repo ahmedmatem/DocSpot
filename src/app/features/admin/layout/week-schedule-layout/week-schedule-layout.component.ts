@@ -26,7 +26,13 @@ export class WeekScheduleLayoutComponent {
   readonly starts = signal<string[]>([]);
 
   ngOnInit() {
+    // load initial data
+    this.weekScheduleService.loadAll().subscribe();
     this.weekScheduleService.loadAll().subscribe(weeks => {
+      this.weeks = weeks ?? [];})
+
+    // react to any changes (including new saved weeks)
+    this.weekScheduleService.weeks$.subscribe(weeks => {
       this.weeks = weeks ?? [];
 
       // pick an initial week - active one
@@ -42,7 +48,7 @@ export class WeekScheduleLayoutComponent {
   readonly tabs = computed<Tab[]>(() => [
     ...this.starts().map(d => ({
       label: d === this.activeScheduleStartDate
-        ? `${d.replaceAll('-', '/')}-Актуално`
+        ? `От ${d.replaceAll('-', '/')}-Актуално`
         : `От ${d.replaceAll('-', '/')}`,
       start: d
     }))

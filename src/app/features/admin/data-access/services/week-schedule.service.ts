@@ -11,6 +11,8 @@ export class WeekScheduleService {
   private readonly weeksSubject = new BehaviorSubject<weekSchedulePayload[] | null>(null);
   readonly weeks$ = this.weeksSubject.asObservable();
 
+  private weeksCache: weekSchedulePayload[] = [];
+
   // quick lookup by startDate
   private readonly weeksByStartDate = new Map<string, weekSchedulePayload>();
   
@@ -71,7 +73,17 @@ export class WeekScheduleService {
 
   save(dto: weekSchedulePayload){
     const url = `${environment.apiAdminBaseUrl}/week-schedule/`;
-    return this.http.post(url, dto); // returns Observable<any>
+    return this.http.post<weekSchedulePayload>(url, dto).pipe(
+      tap(saved => {
+        // update cache
+        const others = this.weeksCache.filter(w => w.startDate !== saved.startDate);
+        this.weeksCache = [...others, saved].sort((a, b) =>
+          a.startDate.localeCompare(b.startDate)
+        );
+        // notify subscribers (layout)
+        this.weeksSubject.next(this.weeksCache);
+      })
+    );
   }
 
   handleSave(success: boolean) {
