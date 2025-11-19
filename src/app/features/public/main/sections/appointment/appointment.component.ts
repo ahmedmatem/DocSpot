@@ -1,7 +1,7 @@
 import { Component, computed, DestroyRef, effect, ElementRef, inject, model, signal, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { TimeSlotComponent } from "../../../../../shared/ui/time-slot/time-slot.component";
+import { Slot, TimeSlotComponent } from "../../../../../shared/ui/time-slot/time-slot.component";
 import { formatDate } from '@angular/common';
 import { AppointmentService } from '../../../../../core/data-access/services/appointment.service';
 import { finalize } from 'rxjs';
@@ -32,6 +32,9 @@ export class AppointmentComponent {
   minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()); // start of today
   maxDate = new Date(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate()); // +1 years, same month/day
 
+  timeSlots: Slot[] = []; // e.g. [{ time: "08:00", available: bool }, { time: "08:20", available: bool }, ...]
+  selectedSlot: Slot | null = null;
+
   // UI state
   loading = signal(false);
   sent = signal(false);
@@ -42,13 +45,22 @@ export class AppointmentComponent {
     this.submit();
   }
 
+  ngOnInit(): void {
+    // initial load (today)
+    const today = new Date();
+    this.selectedDate.set(today);
+    this.loadTimeSlotsForDate(today);
+  }
+
   ngAfterViewInit(): void {
     this.appointmentFormRef.nativeElement.addEventListener('submit', this.submitHandler);
   }
 
   // MatCalendar two-way binding helper
-  onDateSelected(d: Date){
-    this.selectedDate.set(d);
+  onDateSelected(date: Date){
+    this.selectedDate.set(date);
+    this.selectedSlot = null; // reset previous choice, if any
+    this.loadTimeSlotsForDate(date);
   }
 
   // Hook up <app-time-slot> output to this
@@ -99,7 +111,18 @@ export class AppointmentComponent {
         console.error('appointment submission error:', err);
         this.error.set(err?.error?.message ?? 'Неуспешна заявка. Моля, опитайте отново по-късно.');
       }
+    });    
+  }
+  
+  private loadTimeSlotsForDate(date: Date): void {
+    const dateStr = date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
+
+    this.appointmentService.getTimeSlotsBy(dateStr).subscribe({
+      next: (slots) => (this.timeSlots = slots),
+      error: (err) => {
+        console.error('Error loading slots', err);
+        this.timeSlots = [];
+      }
     });
-    
   }
 }

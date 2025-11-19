@@ -72,7 +72,10 @@
                             </mat-card>
                         </div>
                         <div class="col-12 col-lg-6">
-                            <app-time-slot [date]="today" (slotSelected)="onTimeSelected($event)"></app-time-slot>
+                            <app-time-slot 
+                                [date]="selectedDate()!" 
+                                [slots]="[]"
+                                (slotSelected)="onTimeSelected($event)"></app-time-slot>
                         </div>
                     </div>
                 </div>

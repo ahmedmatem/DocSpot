@@ -1,6 +1,6 @@
 import { Component, input, Input, output, signal } from '@angular/core';
 
-type Slot = {time: string, awailable: boolean};
+export type Slot = {time: string, available: boolean};
 
 @Component({
   selector: 'app-time-slot',
@@ -12,15 +12,16 @@ export class TimeSlotComponent {
   readonly selectedSlot = signal<string | null>(null);
 
   date = input.required<Date>();
+
   slots = input<Slot[]>([
-    {time: '09:00', awailable: true},
-    {time: '10:00', awailable: false},
-    {time: '11:00', awailable: true},
-    {time: '12:00', awailable: true},
-    {time: '01:00', awailable: false},
-    {time: '02:00', awailable: true},
-    {time: '03:00', awailable: true},
-    {time: '04:00', awailable: false},
+    {time: '09:00', available: true},
+    {time: '10:00', available: false},
+    {time: '11:00', available: true},
+    {time: '12:00', available: true},
+    {time: '01:00', available: false},
+    {time: '02:00', available: true},
+    {time: '03:00', available: true},
+    {time: '04:00', available: false},
   ]);
 
   slotSelected = output<string>();
