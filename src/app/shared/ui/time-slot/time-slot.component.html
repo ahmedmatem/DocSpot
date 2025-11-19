@@ -7,7 +7,7 @@
 
     <div class="slots">
         @if(slots().length){
-            @for (slot of slots(); track slot.time) {
+            @for (slot of slots(); track $index) {
                 <button 
                     type="button" 
                     class="slot-item"

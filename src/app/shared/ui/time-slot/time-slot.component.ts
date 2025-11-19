@@ -13,16 +13,7 @@ export class TimeSlotComponent {
 
   date = input.required<Date>();
 
-  slots = input<Slot[]>([
-    {time: '09:00', available: true},
-    {time: '10:00', available: false},
-    {time: '11:00', available: true},
-    {time: '12:00', available: true},
-    {time: '01:00', available: false},
-    {time: '02:00', available: true},
-    {time: '03:00', available: true},
-    {time: '04:00', available: false},
-  ]);
+  slots = input<Slot[]>([]); // [{ {time: '09:00', available: true }, ... }]
 
   slotSelected = output<string>();
 

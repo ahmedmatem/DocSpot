@@ -73,8 +73,8 @@
                         </div>
                         <div class="col-12 col-lg-6">
                             <app-time-slot 
-                                [date]="selectedDate()!" 
-                                [slots]="[]"
+                                [date]="today" 
+                                [slots]="timeSlots"
                                 (slotSelected)="onTimeSelected($event)"></app-time-slot>
                         </div>
                     </div>
