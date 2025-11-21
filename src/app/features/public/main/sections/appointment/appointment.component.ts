@@ -115,7 +115,9 @@ export class AppointmentComponent {
   }
   
   private loadTimeSlotsForDate(date: Date): void {
-    const dateStr = date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
+    // const dateStr = date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
+    const dateStr = this.formatDateLocal(date);
+    console.log('Selected date:', date, 'Sending:', dateStr);
 
     this.appointmentService.getTimeSlotsBy(dateStr).subscribe({
       next: (slots) => (this.timeSlots = slots),
@@ -124,5 +126,12 @@ export class AppointmentComponent {
         this.timeSlots = [];
       }
     });
+  }
+
+  private formatDateLocal(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }
