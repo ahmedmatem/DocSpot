@@ -1,7 +1,7 @@
 <section class="time-slot p-0">
-    <div class="weekday text-center">ЧЕТВЪРТЪК</div>
+    <div class="weekday text-center">{{ weekday() }}</div>
 
-    <div class="full-date text-center fs-4">20 АВГУСТ 2025</div>
+    <div class="full-date text-center fs-4">{{ date() | date:'dd MMM yyyy':'':'bg-BG' | uppercase }}</div>
 
     <hr class="w-100" />
 

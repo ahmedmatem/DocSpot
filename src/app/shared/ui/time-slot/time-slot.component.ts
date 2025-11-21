@@ -1,10 +1,11 @@
-import { Component, input, Input, output, signal } from '@angular/core';
+import { DatePipe, UpperCasePipe } from '@angular/common';
+import { Component, computed, input, Input, output, signal } from '@angular/core';
 
 export type Slot = {time: string, available: boolean};
 
 @Component({
   selector: 'app-time-slot',
-  imports: [],
+  imports: [DatePipe, UpperCasePipe],
   templateUrl: './time-slot.component.html',
   styleUrl: './time-slot.component.css',
 })
@@ -16,6 +17,11 @@ export class TimeSlotComponent {
   slots = input<Slot[]>([]); // [{ {time: '09:00', available: true }, ... }]
 
   slotSelected = output<string>();
+
+  readonly weekday = computed(() => {
+    const d = this.date();
+    return d.toLocaleDateString('bg-BG', {weekday: 'long'}).toUpperCase();
+  });
 
   pick(time: string){
     this.selectedSlot.set(time);
