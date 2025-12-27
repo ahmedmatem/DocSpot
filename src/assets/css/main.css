@@ -156,7 +156,7 @@ section,
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 60px 0;
-  scroll-margin-top: 72px;
+  scroll-margin-top: 45px;
   overflow: clip;
 }
 
