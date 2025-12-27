@@ -14,7 +14,7 @@ export class AppointmentService {
   constructor(private http: HttpClient) { }
 
   create(payload: CreateAppointmentPayload ) {
-    return this.http.post<void>(this.baseUrl + "book", payload);
+    return this.http.post(this.baseUrl + "book", payload, { responseType: 'text' });
   }
 
   getTimeSlotsBy(date: string): Observable<Slot[]> {

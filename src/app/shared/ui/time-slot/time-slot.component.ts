@@ -10,6 +10,8 @@ export type Slot = {time: string, available: boolean};
   styleUrl: './time-slot.component.css',
 })
 export class TimeSlotComponent {
+  @Input() selectedTime: string | null = null;
+  
   readonly selectedSlot = signal<string | null>(null);
 
   date = input.required<Date>();
@@ -23,8 +25,12 @@ export class TimeSlotComponent {
     return d.toLocaleDateString('bg-BG', {weekday: 'long'}).toUpperCase();
   });
 
-  pick(time: string){
-    this.selectedSlot.set(time);
-    this.slotSelected.emit(time);
+  // pick(time: string){
+  //   this.selectedSlot.set(time);
+  //   this.slotSelected.emit(time);
+  // }
+  pick(slot: Slot) {
+    if (!slot.available) return;
+    this.slotSelected.emit(slot.time);
   }
 }

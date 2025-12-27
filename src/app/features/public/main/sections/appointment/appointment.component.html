@@ -8,7 +8,7 @@
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <form #appointmentForm role="form" class="php-email-form">
+        <form #appointmentForm role="form" (submit)="submit($event)" class="php-email-form">
             <div class="row">
                 <!-- left side -->
                 <div class="col-12 col-lg-6">
@@ -68,13 +68,14 @@
                                     [minDate]="minDate" 
                                     [maxDate]="maxDate"
                                     (selectedChange)="onDateSelected($event)"
-                                    [(selected)]="selectedDate" required=""></mat-calendar>
+                                    [selected]="selectedDate()" required=""></mat-calendar>
                             </mat-card>
                         </div>
                         <div class="col-12 col-lg-6">
                             <app-time-slot 
                                 [date]="selectedDate()!" 
                                 [slots]="timeSlots"
+                                [selectedTime]="selectedTime()"
                                 (slotSelected)="onTimeSelected($event)"></app-time-slot>
                         </div>
                     </div>
@@ -88,7 +89,9 @@
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
-                <div class="text-center"><button type="submit">Запази час</button></div>
+                <div class="text-center">
+                    <button type="submit">Запази час</button>
+                </div>
             </div>
         </form>
         
