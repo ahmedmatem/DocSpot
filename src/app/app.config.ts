@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { TOASTR_OPTIONS } from './core/config/toastr.options';
 
 registerLocaleData(localeBg);
 
@@ -29,12 +30,7 @@ export const BG_MONTH_YEAR_FORMATS = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
-    provideToastr({
-      positionClass: 'toast-top-right',
-      timeOut: 3000,
-      closeButton: true,
-      progressBar: true,
-    }),
+    provideToastr(TOASTR_OPTIONS),
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
     provideNativeDateAdapter(),

@@ -105,14 +105,7 @@ export class AppointmentComponent {
     .subscribe({
       next: () => {
         this.sent.set(true);
-
         this.toastr.success('Запазихте час успешно!', 'Успех');
-        // // reset form + selection
-        // this.appointmentFormRef.nativeElement.reset();
-        // this.selectedTime.set(null);
-        // // this.selectedSlot = null;
-        // this.selectedDate.set(this.today);
-
         this.resetBookingUi();
       },
       error: (err) => {

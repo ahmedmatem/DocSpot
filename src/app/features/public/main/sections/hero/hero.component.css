@@ -3,8 +3,8 @@
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: calc(100vh - 112px);
-  padding: 80px 0;
+  min-height: calc(100vh - 62px);
+  padding: 100px 0;
   display: flex;
   align-items: center;
   justify-content: center;
