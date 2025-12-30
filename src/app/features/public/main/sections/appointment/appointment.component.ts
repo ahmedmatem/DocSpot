@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-appointment',
   imports: [
     MatCardModule, 
-    MatDatepickerModule, 
+    MatDatepickerModule,
     TimeSlotComponent,
     FormsModule
   ],
@@ -30,6 +30,11 @@ export class AppointmentComponent {
   private toastr = inject(ToastrService);
   
   readonly today = new Date();
+  
+  name = signal('');
+  phone = signal('');
+  email = signal('');
+  visitType = signal<VisitType>('PAID');
   selectedDate = signal<Date | null>(null);
   selectedTime = signal<string | null>(null);
   
@@ -62,6 +67,33 @@ export class AppointmentComponent {
   onTimeSelected(time: string){
     this.selectedTime.set(time);
   }
+
+  canSubmit = computed(() => {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email().trim());
+    return (
+      this.name().trim().length > 0 &&
+      this.phone().trim().length > 0 &&
+      emailOk &&
+      !!this.visitType() &&
+      !!this.selectedDate() &&
+      !!this.selectedTime() &&
+      !this.loading()
+    );
+  });
+
+  submitHint = computed(() => {
+    if (this.loading()) return 'Изпращане...';
+    const missing: string[] = [];
+    if (!this.name().trim()) missing.push('име');
+    if (!this.phone().trim()) missing.push('телефон');
+    if (!this.email().trim()) missing.push('имейл');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email().trim())) missing.push('валиден имейл');
+    if (!this.selectedTime()) missing.push('час');
+
+    return missing.length
+      ? `Попълнете: ${missing.join(', ')}.`
+      : '';
+  });
 
   submit(e: Event) {
     e.preventDefault();

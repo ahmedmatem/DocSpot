@@ -171,3 +171,46 @@ div[role="alert"] {
   }
 }
 
+.submit-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-hint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 125%;
+  white-space: nowrap;
+  border-radius: 8px;
+  /* background: #222;
+  color: #fff; */
+  background: color-mix(in srgb, var(--accent-color), var(--surface-color) 92%);
+  color: var(--accent-color);
+
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 55%);
+  border-left: 4px solid var(--accent-color);
+  border-radius: 12px;
+
+  padding: 2em 2.2em;
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 1.2;
+
+  /* Soft elevation like your cards */
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--default-color), transparent 85%);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .15s ease, visibility .15s ease;
+  z-index: 50;
+}
+
+/* show only on hover */
+.submit-wrap.is-disabled:hover .hover-hint {
+  opacity: 1;
+  visibility: visible;
+}
+
+
