@@ -213,4 +213,14 @@ div[role="alert"] {
   visibility: visible;
 }
 
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 0.5em;
+  color: #666;
+}
+
+.uppercase {
+  text-transform: uppercase;
+} 
+
 

@@ -114,13 +114,6 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
                 <div class="text-center">
-                    <!-- @if(!canSubmit()){
-                        <div class="text-danger small mb-2">
-                            {{ submitHint() }}
-                        </div>
-                    }
-                    <button type="submit" [disabled]="!canSubmit()">Запази час</button> -->
-
                     <div class="submit-wrap" [class.is-disabled]="!canSubmit()">
                         <button type="submit" class="btn btn-success" [disabled]="!canSubmit()">
                             Запази час
@@ -142,3 +135,53 @@
     </div>
 
 </section>
+
+<!-- Success Modal -->
+<div class="modal fade" id="appointmentSuccessModal" tabindex="-1" aria-labelledby="appointmentSuccessModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+
+      <div class="modal-body">
+        <div class="bg-white p-2 h-auto rounded-xl shadow-xl flex flex-col items-center justify-center overflow-auto">
+            <div>
+                <div class="text-center font-bold border-b pb-2 flex flex-col">
+                    <h5> Благодарим за доверието! </h5>
+                    <span class="text-base"> Вашия час беше успешно регистриран в нашата система. </span>
+                </div>
+                <div class="py-1">
+                    <div class="text-default underline"> 
+                        ДАТА И ЧАС 
+                    </div>
+                    <div class="text-secondary mt-1 fw-bold">
+                        <span class="uppercase">сряда 21 януари 2026</span> г. <br>
+                        <span class="text-lg">17:00</span> ч. 
+                    </div>
+
+                    <div class="text-default underline mt-3"> ТИП </div>
+                    <div class="text-secondary mt-1 fw-bold">Платен преглед</div>
+
+                    <div class="text-default underline mt-3"> ИМЕНА </div>
+                    <div class="text-secondary mt-1 fw-bold">Огнян Демирев</div>
+
+                    <div class="text-default underline mt-3"> ТЕЛЕФОН </div>
+                    <div class="text-secondary mt-1 fw-bold">0893782892</div>
+
+                    <div class="text-default underline mt-3"> EMAIL </div>
+                    <div class="text-secondary mt-1 fw-bold">ahmedmatemAgmail.cm</div>
+
+                    <div class="text-sm mt-3"> 
+                        Ще получите имейл с потвърждение за записания час. Можете да откажете записания час от линка в имейла. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-2">
+                <button class="text-sm hover:underline btn btn-outline-default" data-bs-dismiss="modal"> 
+                    ЗАТВОРИ 
+                </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
