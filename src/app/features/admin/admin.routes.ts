@@ -3,7 +3,6 @@ import { AdminLayoutComponent } from "./layout/admin-layout/admin-layout.compone
 import { adminGuard } from "../../core/auth/admin.gard";
 import { AdminDashboardComponent } from "./pages/admin-dashboard/admin-dashboard.component";
 import { WeekScheduleLayoutComponent } from "./layout/week-schedule-layout/week-schedule-layout.component";
-import { AdminWeekScheduleComponent } from "./pages/admin-week-schedule/admin-week-schedule.component";
 
 export const ADMIN_ROUTES: Routes = [
     {

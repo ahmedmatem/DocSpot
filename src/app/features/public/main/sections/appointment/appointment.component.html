@@ -9,7 +9,7 @@
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <form #appointmentForm role="form" novalidate (submit)="submit($event)" class="php-email-form">
-            <div class="row">
+            <div class="row mb-1">
                 <!-- left side -->
                 <div class="col-12 col-lg-6">
                     <h6 class="border-bottom mb-5 pb-1"> Данни за пациента </h6>
@@ -87,7 +87,7 @@
                     <h6 class="border-bottom mb-5 pb-1"> Дата и час </h6>
                     <div class="row">
                         <div class="col-12 col-lg-6 justify-content-center d-flex">
-                            <mat-card class="demo-inline-calendar-card mb-5">
+                            <mat-card class="demo-inline-calendar-card mb-1">
                                 <mat-calendar 
                                     [minDate]="minDate" 
                                     [maxDate]="maxDate"

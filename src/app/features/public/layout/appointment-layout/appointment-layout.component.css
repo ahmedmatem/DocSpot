@@ -1,0 +1,7 @@
+.content {
+  width: 100%;
+  min-height: calc(100vh - 0px);
+  padding: 110px 12px 0px;
+  position: relative;
+  overflow: hidden;
+}
