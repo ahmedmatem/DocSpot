@@ -9,6 +9,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VisitType } from '../../../../../core/data-access/models/appointment.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { Modal } from 'bootstrap';
+
+declare const bootstrap: any;
 
 @Component({
   standalone: true,
@@ -27,6 +30,7 @@ export class AppointmentComponent {
 
   private appointmentService = inject(AppointmentService);
   private destroyRef = inject(DestroyRef);
+  private successModal!: Modal;
   private toastr = inject(ToastrService);
   
   readonly today = new Date();
@@ -54,6 +58,11 @@ export class AppointmentComponent {
     const today = new Date();
     this.selectedDate.set(today);
     this.loadTimeSlotsForDate(today);
+  }
+
+  ngAfterViewInit(): void {
+    const el = document.getElementById('appointmentSuccessModal');
+    if (el) this.successModal = new bootstrap.Modal(el, { backdrop: 'static', keyboard: true });
   }
 
   // MatCalendar two-way binding helper
@@ -137,7 +146,8 @@ export class AppointmentComponent {
     .subscribe({
       next: () => {
         this.sent.set(true);
-        this.toastr.success('Запазихте час успешно!', 'Успех');
+        this.successModal?.show();
+        // this.toastr.success('Запазихте час успешно!', 'Успех');
         this.resetBookingUi();
       },
       error: (err) => {
@@ -173,6 +183,10 @@ export class AppointmentComponent {
   private resetBookingUi() {
     // reset native form fields
     this.appointmentFormRef.nativeElement.reset();
+    this.name.set('');
+    this.phone.set('');
+    this.email.set('');
+    this.visitType.set('PAID');
 
     // reset custom UI state
     this.selectedTime.set(null);
