@@ -10,7 +10,7 @@ import { VisitType } from '../../../../../core/data-access/models/appointment.mo
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { Modal } from 'bootstrap';
-import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-as-bg.pipe';
+import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-bg.pipe';
 
 declare const bootstrap: any;
 

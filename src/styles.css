@@ -21,7 +21,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Hide the extra month label that appears under the header */
 .cdk-overlay-container .mat-mdc-datepicker-content .mat-calendar-body-label,
 .mat-calendar .mat-calendar-body-label {
-  display: none;
+  visibility: hidden;
 }
 
 .mat-calendar{
@@ -44,3 +44,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 50%;
     pointer-events: none;
   }
+
+/* Fix Angular Material calendar: keep disabled (other-month) days in the grid */
+.mat-calendar .mat-calendar-body-disabled,
+.mat-calendar .mat-calendar-body-disabled .mat-calendar-body-cell-content,
+.mat-calendar .mat-calendar-body-disabled .mat-calendar-body-cell-content.mat-focus-indicator {
+  display: flex !important;        /* or inline-flex */
+  visibility: visible !important;
+  /* opacity: 1; */
+}

@@ -21,6 +21,6 @@ export class VisitTypeBgPipe implements PipeTransform {
 
     const map = mode === 'short' ? mapShort : mapFull;
     return map[value ?? ''] ?? '—';
-    }
+  }
 
 }
