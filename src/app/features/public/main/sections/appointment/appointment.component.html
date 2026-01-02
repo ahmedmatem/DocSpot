@@ -137,7 +137,7 @@
 </section>
 
 <!-- Success Modal -->
-<div class="modal fade" id="appointmentSuccessModal" tabindex="-1" aria-labelledby="appointmentSuccessModalLabel" aria-hidden="true">
+<div #successModalEl class="modal fade" id="appointmentSuccessModal" tabindex="-1" aria-labelledby="appointmentSuccessModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-4">
 
@@ -154,21 +154,22 @@
                         ДАТА И ЧАС 
                     </div>
                     <div class="text-dark mt-1">
-                        <span class="uppercase">сряда 21 януари 2026</span> г. <br>
-                        <span class="text-lg">17:00</span> ч. 
+                        <span class="uppercase">
+                            {{ modalDate() | date:'EEEE d MMMM y':'':'bg-BG' }}</span> г. <br>
+                        <span class="text-lg">{{ modalTime() }}</span> ч. 
                     </div>
 
                     <div class="text-secondary underline mt-3"> ТИП </div>
-                    <div class="text-dark mt-1">Платен преглед</div>
+                    <div class="text-dark mt-1">{{ modalVisitType() | visitTypeBg }}</div>
 
                     <div class="text-secondary underline mt-3"> ИМЕНА </div>
-                    <div class="text-dark mt-1">Огнян Демирев</div>
+                    <div class="text-dark mt-1">{{ modalName() }}</div>
 
                     <div class="text-secondary underline mt-3"> ТЕЛЕФОН </div>
-                    <div class="text-dark mt-1">0893782892</div>
+                    <div class="text-dark mt-1">{{ modalPhone() }}</div>
 
                     <div class="text-secondary underline mt-3"> EMAIL </div>
-                    <div class="text-dark mt-1">ahmedmatemAgmail.cm</div>
+                    <div class="text-dark mt-1">{{ modalEmail() }}</div>
 
                     <div class="text-secondary mt-3"> 
                         Ще получите имейл с потвърждение за записания час. Можете да откажете записания час от линка в имейла. 

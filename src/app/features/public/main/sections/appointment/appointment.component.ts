@@ -2,7 +2,7 @@ import { Component, computed, DestroyRef, effect, ElementRef, inject, model, sig
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Slot, TimeSlotComponent } from "../../../../../shared/ui/time-slot/time-slot.component";
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { AppointmentService } from '../../../../../core/data-access/services/appointment.service';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,6 +10,7 @@ import { VisitType } from '../../../../../core/data-access/models/appointment.mo
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { Modal } from 'bootstrap';
+import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-as-bg.pipe';
 
 declare const bootstrap: any;
 
@@ -20,13 +21,16 @@ declare const bootstrap: any;
     MatCardModule, 
     MatDatepickerModule,
     TimeSlotComponent,
-    FormsModule
+    FormsModule,
+    DatePipe,
+    VisitTypeBgPipe
   ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.css'
 })
 export class AppointmentComponent {
   @ViewChild('appointmentForm') appointmentFormRef!: ElementRef<HTMLFormElement>;
+  @ViewChild('successModalEl') successModalEl!: ElementRef<HTMLDivElement>;
 
   private appointmentService = inject(AppointmentService);
   private destroyRef = inject(DestroyRef);
@@ -35,12 +39,21 @@ export class AppointmentComponent {
   
   readonly today = new Date();
   
+  // Form fields
   name = signal('');
   phone = signal('');
   email = signal('');
   visitType = signal<VisitType>('PAID');
   selectedDate = signal<Date | null>(null);
   selectedTime = signal<string | null>(null);
+
+  // Modal fields
+  modalDate = signal<Date | null>(null);
+  modalTime = signal<string | null>(null);
+  modalName = signal('');
+  modalPhone = signal('');
+  modalEmail = signal('');
+  modalVisitType = signal<VisitType>('PAID');
   
   minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()); // start of today
   maxDate = new Date(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate()); // +1 years, same month/day
@@ -61,8 +74,14 @@ export class AppointmentComponent {
   }
 
   ngAfterViewInit(): void {
-    const el = document.getElementById('appointmentSuccessModal');
+    // const el = document.getElementById('appointmentSuccessModal');
+    const el = this.successModalEl?.nativeElement;
     if (el) this.successModal = new bootstrap.Modal(el, { backdrop: 'static', keyboard: true });
+
+    // Reset AFTER user closes the modal
+    el.addEventListener('hidden.bs.modal', () => {
+      this.resetBookingUi();
+    });
   }
 
   // MatCalendar two-way binding helper
@@ -146,9 +165,20 @@ export class AppointmentComponent {
     .subscribe({
       next: () => {
         this.sent.set(true);
+
+        // capture values for modal BEFORE resetting form/signals
+        this.modalDate.set(this.selectedDate());
+        this.modalTime.set(this.selectedTime());
+        this.modalName.set(this.name());
+        this.modalPhone.set(this.phone());
+        this.modalEmail.set(this.email());
+        this.modalVisitType.set(this.visitType());
+
         this.successModal?.show();
+
         // this.toastr.success('Запазихте час успешно!', 'Успех');
-        this.resetBookingUi();
+        // DO NOT reset here anymore (we reset on hidden.bs.modal)
+        // this.resetBookingUi();
       },
       error: (err) => {
         console.error('appointment submission error:', err);
