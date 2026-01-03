@@ -16,7 +16,11 @@ export const APPOINTMENT_PAGE_ROUTES = [
                 loadComponent: () => import('./appointment-cancelled/appointment-cancelled.component')
                     .then(m => m.AppointmentCancelledComponent)
             },
+            {
+                path: 'manage',
+                loadComponent: () => import('./appointment-manage/appointment-manage.component')
+                    .then(m => m.AppointmentManageComponent)
+            }
         ]
-    },
-    
+    }
 ];
