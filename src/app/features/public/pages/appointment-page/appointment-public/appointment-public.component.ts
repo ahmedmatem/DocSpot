@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CancelPreviewModel } from '../../../../../core/data-access/models/appointment.model';
 import { AppointmentService } from '../../../../../core/data-access/services/appointment.service';
 import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-bg.pipe';
@@ -14,7 +14,9 @@ import { environment } from '../../../../../../environments/environment';
   styleUrl: './appointment-public.component.css'
 })
 export class AppointmentPublicComponent {
+  private errorMessage = "Вашия линк за отказване на час е неправилен или времето за отказване е изтекло.";
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private appointmentService = inject(AppointmentService);
 
   contactPhone = environment.contactPhone;
@@ -50,7 +52,7 @@ export class AppointmentPublicComponent {
             this.appt.set(appt);
           },
           error: (err) => {
-            this.error.set("Вашия линк за отказване на час е неправилен или времето за отказване е изтекло.");
+            this.error.set(this.errorMessage);
           }
         });
     });
@@ -58,8 +60,21 @@ export class AppointmentPublicComponent {
 
   onCancel() {
     if (!this.id() || !this.token()) {
-      this.error.set('Невалиден линк');
+      this.error.set(this.errorMessage);
       return;
     }
+
+    this.actionLoading.set(true);
+    this.error.set(null);
+
+    this.appointmentService.cancelPublic(this.id()!, this.token()!)
+    .pipe(finalize(() => this.actionLoading.set(false)))
+      .subscribe({
+        next: () => {
+          // redirect to success page
+          this.router.navigateByUrl('/appointment/cancelled');
+        },
+        error: (err) => this.error.set(this.errorMessage)
+      });
   }
 }

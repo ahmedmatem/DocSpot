@@ -1,5 +1,5 @@
 import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter } from '@angular/material/core';
 import { LocaleDateAdapter } from './core/date/LocaleDateAdapter';
 
@@ -32,7 +32,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(TOASTR_OPTIONS),
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes),
+    provideRouter(routes,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled'
+      })),
     provideNativeDateAdapter(),
     { provide: LOCALE_ID, useValue: 'bg' }, // 🇧🇬 sets Bulgarian locale globally
     { provide: DateAdapter, useClass: LocaleDateAdapter }, // use custom date adapter
