@@ -17,9 +17,9 @@ export const APPOINTMENT_PAGE_ROUTES = [
                     .then(m => m.AppointmentCancelledComponent)
             },
             {
-                path: 'manage',
-                loadComponent: () => import('./appointment-manage/appointment-manage.component')
-                    .then(m => m.AppointmentManageComponent)
+                path: 'public',
+                loadComponent: () => import('./appointment-public/appointment-public.component')
+                    .then(m => m.AppointmentPublicComponent)
             }
         ]
     }

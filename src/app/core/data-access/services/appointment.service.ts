@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { CreateAppointmentPayload } from '../models/appointment.model';
+import { CancelPreviewModel, CreateAppointmentPayload } from '../models/appointment.model';
 import { Observable } from 'rxjs';
 import { Slot } from '../../../shared/ui/time-slot/time-slot.component';
 
@@ -22,5 +22,20 @@ export class AppointmentService {
 
      // Backend should return something like ["09:00", "09:20", "09:40", ...]
      return this.http.get<Slot[]>(this.baseUrl + "time-slots", { params });
+  }
+
+  // Get public appointment details by its public token and Id
+  getCancelPreview(id: string, token:string) : Observable<CancelPreviewModel> {
+    return this.http.get<CancelPreviewModel>(`${this.baseUrl}cancel-preview`, {params: {id, token}});
+  }
+
+  // Confirm public appointment by its public token and Id
+  confirmPublic(id: string, token: string) {
+    return this.http.get(`${this.baseUrl}public/confirm`, {params: {id, token}});
+  }
+
+  // Cancel public appointment by its public token and Id
+  cancelPublic(id: string, token: string) {
+    return this.http.get(`${this.baseUrl}public/cancel`, {params: {id, token}});
   }
 }

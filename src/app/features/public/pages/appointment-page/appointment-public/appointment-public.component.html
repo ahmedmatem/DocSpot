@@ -1,0 +1,94 @@
+<section class="public-appointment-page py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+
+        <!-- Title -->
+        <div class="text-center mb-4">
+          @if(error()) {
+            <div class="display-6 fw-normal fs-1 mb-0">
+              Неуспешно отказване на час
+            </div>
+          } @else { 
+            <div class="display-6 fw-normal fs-1 mb-0">
+              Моля потвърдете, че искате да откажете
+            </div>
+          }
+        </div>
+
+        <!-- LOADING -->
+        @if (loading()) {
+          <div class="d-flex flex-column align-items-center justify-content-center gap-3 mt-4">
+            <div class="spinner-border" role="status" aria-label="Зареждане">
+              <span class="visually-hidden">Зареждане...</span>
+            </div>
+            <div class="text-muted">Зареждане на данните...</div>
+          </div>
+        }
+        <!-- ERROR -->
+        @else if (error()) {          
+          <p class="lead mb-0 text-center">
+            {{ error() }}
+          </p>
+          <div class="text-center mt-5">
+            <!-- phone -->
+            <div class="mt-2 small text-uppercase text-muted" style="letter-spacing: .08em;">
+              Можете да звъните на
+            </div>
+
+          
+            <a class="d-inline-block mt-1 fs-4 fw-normal text-decoration-none text-dark" href="tel:{{ contactPhone }}">
+                {{ contactPhone }}
+            </a>
+          </div>
+        }
+        <!-- CONTENT -->
+        @else {
+          <div class="d-flex flex-column align-items-center">
+
+            <!-- Appointment card -->
+            <div class="card appt-card rounded-4 border-1">
+              <div class="card-body text-center p-4">
+
+                <div class="fw-medium">
+                  {{ appt()!.visitType | visitTypeBg }}
+                </div>
+
+                <div class="text-muted">на</div>
+
+                <div class="fw-normal text-uppercase fs-4 mt-1">
+                  {{ appt()!.appointmentDate | date:'dd MMMM y':'':'bg-BG' }}
+                </div>
+
+                <div class="text-muted small mt-1">от</div>
+
+                <div class="fw-normal fs-4">
+                  {{ appt()!.appointmentTime | slice:0:5 }}
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-4 d-flex flex-column flex-sm-row gap-2 justify-content-center">
+              <!-- If this page is specifically "cancel confirmation", keep only this button -->
+              <button class="btn btn-secondary rounded-pill px-3"
+                      (click)="onCancel()"
+                      [disabled]="actionLoading()">
+                @if (actionLoading()) {
+                  <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                  Обработка...
+                } @else {
+                  Потвърдете
+                }
+              </button>
+
+            </div>
+
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+</section>

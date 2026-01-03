@@ -1,0 +1,9 @@
+.public-appointment-page{
+  /* Helps center the content under a fixed header */
+  min-height: calc(100vh - 120px);
+}
+
+.appt-card{
+  width: 280px;
+  border-color: rgba(190, 188, 188, 0.25); /* subtle blue border like the screenshot */
+}
