@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-appointment-cancelled',
@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
   styleUrl: './appointment-cancelled.component.css'
 })
 export class AppointmentCancelledComponent {
-
 }

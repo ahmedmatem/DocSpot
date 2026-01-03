@@ -24,7 +24,6 @@ export class AppointmentService {
      return this.http.get<Slot[]>(this.baseUrl + "time-slots", { params });
   }
 
-  // Get public appointment details by its public token and Id
   getCancelPreview(id: string, token:string) : Observable<CancelPreviewModel> {
     return this.http.get<CancelPreviewModel>(`${this.baseUrl}cancel-preview`, {params: {id, token}});
   }
@@ -36,6 +35,6 @@ export class AppointmentService {
 
   // Cancel public appointment by its public token and Id
   cancelPublic(id: string, token: string) {
-    return this.http.get(`${this.baseUrl}public/cancel`, {params: {id, token}});
+    return this.http.get(`${this.baseUrl}public/cancel`, {params: {id, token}, responseType: 'text'});
   }
 }
