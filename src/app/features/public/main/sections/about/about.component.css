@@ -1,6 +1,17 @@
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.about {
+  padding-top: 130px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding-top: 90px !important;
+  }
+  
+}
+
 .about .content h3 {
   font-size: 2rem;
   font-weight: 700;

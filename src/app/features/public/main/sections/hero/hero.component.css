@@ -12,6 +12,13 @@
   overflow: hidden;
 }
 
+@media screen and (max-width: 768px) {
+  .hero {
+    padding-top: 120px !important;
+  }
+  
+}
+
 .hero img {
   position: absolute;
   inset: 0;
