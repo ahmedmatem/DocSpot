@@ -23,8 +23,8 @@ import { ContactComponent } from "./sections/contact/contact.component";
     // DepartmentsComponent,
     // DoctorsComponent,
     FaqComponent,
-    TestimonialComponent,
-    GalleryComponent,
+    // TestimonialComponent,
+    // GalleryComponent,
     ContactComponent
 ],
   templateUrl: './main.component.html',
