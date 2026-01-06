@@ -16,8 +16,8 @@ import { ContactComponent } from "./sections/contact/contact.component";
   selector: 'app-main',
   imports: [
     HeroComponent,
-    AboutComponent,
-    StatsComponent,
+    // AboutComponent,
+    // StatsComponent,
     // ServicesComponent,
     AppointmentComponent,
     // DepartmentsComponent,
