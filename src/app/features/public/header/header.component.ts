@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, HostListener, Inject, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
+import { SITE_INFO } from '../../../core/config/site-info';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,9 @@ import { filter, Subscription } from 'rxjs';
 })
 export class HeaderComponent {
   @ViewChild('headerEl', { static: true }) headerEl!: ElementRef<HTMLElement>;
+
+  phoneNumber = SITE_INFO.phoneNumber;
+  email = SITE_INFO.email;
 
   isMobileNavOpen = false;
   private sub?: Subscription;
