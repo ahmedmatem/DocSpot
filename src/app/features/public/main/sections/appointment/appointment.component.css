@@ -5,6 +5,10 @@
   padding-top: 110px !important;
 }
 
+.section-title {
+  padding-bottom: 1em;
+}
+
 @media screen and (max-width: 768px) {
   .appointment {
     padding-top: 90px !important;
