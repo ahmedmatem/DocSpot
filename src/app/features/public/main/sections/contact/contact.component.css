@@ -72,3 +72,46 @@
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
+
+
+
+
+/* Contact info row centered */
+.contact-info-row {
+  /* optional: keeps the row from stretching too wide on very large screens */
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Each info item block */
+.info-item {
+  height: 100%;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #fff; /* change if your theme uses another background */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06); /* optional */
+}
+
+/* Icon + title on one line */
+.info-item-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.info-item-head i {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.info-item h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-item p {
+  margin: 0;
+  opacity: 0.9;
+}
