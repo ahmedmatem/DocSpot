@@ -86,8 +86,9 @@ export class AppointmentComponent {
 
   // MatCalendar two-way binding helper
   onDateSelected(date: Date){
-    this.selectedDate.set(date);
+    this.selectedTime.set(null); // reset previous choice, if any
     this.selectedSlot = null; // reset previous choice, if any
+    this.selectedDate.set(date);
     this.loadTimeSlotsForDate(date);
   }
 
