@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { Modal } from 'bootstrap';
 import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-bg.pipe';
+import { HolidaysService } from '../../../../../core/data-access/services/holidays.service';
+import { toIsoDate } from '../../../../../core/helpers/date/date.helper';
 
 declare const bootstrap: any;
 
@@ -34,8 +36,12 @@ export class AppointmentComponent {
 
   private appointmentService = inject(AppointmentService);
   private destroyRef = inject(DestroyRef);
-  private successModal!: Modal;
   private toastr = inject(ToastrService);
+  private holidaysService = inject(HolidaysService);
+
+  private holidaySet = new Set<string>();
+  
+  private successModal!: Modal;
   
   readonly today = new Date();
   
@@ -71,6 +77,13 @@ export class AppointmentComponent {
     const today = new Date();
     this.selectedDate.set(today);
     this.loadTimeSlotsForDate(today);
+
+    // Load holidays for next 12 months(one year) from today
+    this.holidaysService.getUpcomingHolidaysOneYearAhead()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(set => {
+        set.forEach(d => this.holidaySet.add(d))
+      });
   }
 
   ngAfterViewInit(): void {
@@ -89,7 +102,13 @@ export class AppointmentComponent {
     this.selectedTime.set(null); // reset previous choice, if any
     this.selectedSlot = null; // reset previous choice, if any
     this.selectedDate.set(date);
-    this.loadTimeSlotsForDate(date);
+
+    // exclude holidays
+    if(this.holidaySet.has(toIsoDate(date))){
+      this.timeSlots = [];
+    } else {
+      this.loadTimeSlotsForDate(date);      
+    }
   }
 
   // Hook up <app-time-slot> output to this
@@ -192,8 +211,8 @@ export class AppointmentComponent {
   
   private loadTimeSlotsForDate(date: Date): void {
     // const dateStr = date.toISOString().split('T')[0]; // 'yyyy-MM-dd'
-    const dateStr = this.formatDateLocal(date);
-    console.log('Selected date:', date, 'Sending:', dateStr);
+    const dateStr = toIsoDate(date);
+    // console.log('Selected date:', date, 'Sending:', dateStr);
 
     this.appointmentService.getTimeSlotsBy(dateStr).subscribe({
       next: (slots) => (this.timeSlots = slots),
@@ -202,13 +221,6 @@ export class AppointmentComponent {
         this.timeSlots = [];
       }
     });
-  }
-
-  private formatDateLocal(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   private resetBookingUi() {

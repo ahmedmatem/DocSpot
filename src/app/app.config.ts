@@ -1,7 +1,7 @@
 import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter } from '@angular/material/core';
-import { LocaleDateAdapter } from './core/date/LocaleDateAdapter';
+import { LocaleDateAdapter } from './core/helpers/date/LocaleDateAdapter';
 
 import { routes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
