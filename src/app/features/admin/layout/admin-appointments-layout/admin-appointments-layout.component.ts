@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AdminAppointmentsService } from '../../data-access/services/admin-appointments.service';
-import { AdminAppointmentModel, AppointmentStatus } from '../../data-access/models/admin-appointment.model';
+import { AdminAppointmentModel } from '../../data-access/models/admin-appointment.model';
 import { toIsoDate } from '../../../../core/helpers/date/date.helper';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
@@ -22,7 +22,7 @@ export class AdminAppointmentsLayoutComponent {
   // Filters (simple prototype with template-driven forms)
   from: string = '';
   to: string = '';
-  status: AppointmentStatus | 'ALL' = 'ALL';
+  status: string = 'ALL';
   q: string = '';
 
   // State
@@ -33,13 +33,7 @@ export class AdminAppointmentsLayoutComponent {
 
   ngOnInit() {
     // Default: today -> +7 days
-    const today = new Date();
-    const plus7 = new Date(today);
-    plus7.setDate(today.getDate() + 7);
-
-    // ISO yyyy-MM-dd
-    this.from = toIsoDate(today); 
-    this.to = toIsoDate(plus7)
+    this.defaultFromTo();
 
     this.reload();
   }
@@ -69,8 +63,7 @@ export class AdminAppointmentsLayoutComponent {
   }
 
   clearFilters() {
-    this.from = '';
-    this.to = '';
+    this.defaultFromTo();
     this.status = 'ALL';
     this.q = '';
     this.reload();
@@ -98,5 +91,15 @@ export class AdminAppointmentsLayoutComponent {
   onDelete(a: AdminAppointmentModel) {
     // Prototype only (we’ll implement backend + confirmation later)
     alert('Delete will be implemented later (admin-only).');
+  }
+
+  private defaultFromTo(){
+    const today = new Date();
+    const plus7 = new Date(today);
+    plus7.setDate(today.getDate() + 7);
+
+    // ISO yyyy-MM-dd
+    this.from = toIsoDate(today); 
+    this.to = toIsoDate(plus7)
   }
 }

@@ -24,7 +24,7 @@
                 <td><strong>{{ a.appointmentTime }}</strong></td>
                 <td>{{ a.patientName }}</td>
                 <td>{{ a.patientPhone }}</td>
-                <td>{{ a.visitType }}</td>
+                <td>{{ a.visitType | visitTypeBg: 'short' }}</td>
                 <td>
                     <span class="badge" [class.text-bg-warning]="a.appointmentStatus === 'PENDING'"
                         [class.text-bg-success]="a.appointmentStatus === 'CONFIRMED'"

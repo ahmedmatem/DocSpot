@@ -1,7 +1,5 @@
 import { VisitType } from "../../../../core/data-access/models/appointment.model";
 
-export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'DONE';
-
 export interface AdminAppointmentModel {
   id: string;
 
@@ -14,7 +12,7 @@ export interface AdminAppointmentModel {
   appointmentTime: string; // HH:mm
   message?: string;
 
-  appointmentStatus: AppointmentStatus;
+  appointmentStatus: string;
 
   cancelledAtUtc?: string | null; // ISO string
 }

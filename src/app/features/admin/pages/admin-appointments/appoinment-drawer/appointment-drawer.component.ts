@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AdminAppointmentModel } from '../../../data-access/models/admin-appointment.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { VisitTypeBgPipe } from '../../../../../shared/pipes/visittype-bg.pipe';
 
 @Component({
   selector: 'app-appointment-drawer',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, VisitTypeBgPipe],
   templateUrl: './appointment-drawer.component.html',
   styleUrl: './appointment-drawer.component.css'
 })

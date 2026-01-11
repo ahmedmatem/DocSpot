@@ -13,10 +13,12 @@ export class AdminAppointmentsService {
     getList(query: AdminAppointmentsQuery): Observable<AdminAppointmentModel[]> {
         let params = new HttpParams();
 
-        if (query.from) params.set('from', query.from);
-        if (query.to) params.set('to', query.to);
-        if (query.q) params.set('q', query.q);
-        if (query.status && query.status !== 'ALL') params.set('status', query.status);
+        if (query.from) params = params.set('from', query.from);
+        if (query.to) params = params.set('to', query.to);
+        if (query.q) params = params.set('q', query.q);
+        if (query.status && query.status !== 'ALL') params = params.set('status', query.status);
+
+        console.log("Params: ", params);
 
         return this.http.get<AdminAppointmentModel[]>(this.url, { params });
     }
