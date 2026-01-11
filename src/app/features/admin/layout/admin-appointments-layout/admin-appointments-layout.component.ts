@@ -1,0 +1,102 @@
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { AdminAppointmentsService } from '../../data-access/services/admin-appointments.service';
+import { AdminAppointmentModel, AppointmentStatus } from '../../data-access/models/admin-appointment.model';
+import { toIsoDate } from '../../../../core/helpers/date/date.helper';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AppointmentsTableComponent } from '../../pages/appointment/appoinments-table/appointments-table.component';
+import { AppointmentDrawerComponent } from '../../pages/appointment/appoinment-drawer/appointment-drawer.component';
+
+@Component({
+  selector: 'app-admin-appointments-layout',
+  imports: [CommonModule, FormsModule, AppointmentsTableComponent, AppointmentDrawerComponent],
+  templateUrl: './admin-appointments-layout.component.html',
+  styleUrl: './admin-appointments-layout.component.css'
+})
+export class AdminAppointmentsLayoutComponent {
+  private api = inject(AdminAppointmentsService);
+  private destroyRef = inject(DestroyRef);
+
+  // Filters (simple prototype with template-driven forms)
+  from: string = '';
+  to: string = '';
+  status: AppointmentStatus | 'ALL' = 'ALL';
+  q: string = '';
+
+  // State
+  items = signal<AdminAppointmentModel[]>([]);
+  selected = signal<AdminAppointmentModel | null>(null);
+  loading = signal(false);
+  error = signal<string | null>(null);
+
+  ngOnInit() {
+    // Default: today -> +7 days
+    const today = new Date();
+    const plus7 = new Date(today);
+    plus7.setDate(today.getDate() + 7);
+
+    // ISO yyyy-MM-dd
+    this.from = toIsoDate(today); 
+    this.to = toIsoDate(plus7)
+
+    this.reload();
+  }
+
+  openDetails(a: AdminAppointmentModel) {
+    this.selected.set(a);
+  }
+
+  reload() {
+    this.loading.set(true);
+    this.error.set(null);
+
+    this.api.getList({
+      from: this.from || undefined,
+      to: this.to || undefined,
+      status: this.status,
+      q: this.q?.trim() || undefined
+    })
+    .pipe(
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => this.loading.set(false))
+    )
+    .subscribe({
+      next: list => this.items.set(list),
+      error: err => this.error.set(err?.error?.message ?? 'Грешка при зареждане.')
+    });
+  }
+
+  clearFilters() {
+    this.from = '';
+    this.to = '';
+    this.status = 'ALL';
+    this.q = '';
+    this.reload();
+  }
+
+  onCancel(e: { appointment: AdminAppointmentModel; reason?: string }) {
+    const id = e.appointment.id;
+    this.api.cancel(id, e.reason ?? null)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // refresh list + close drawer
+          this.selected.set(null);
+          this.reload();
+        },
+        error: err => this.error.set(err?.error?.message ?? 'Грешка при отказ.')
+      });
+  }
+
+  onReschedule(a: AdminAppointmentModel) {
+    // Prototype only for now (we’ll wire dialog later)
+    alert('Reschedule will be implemented next.');
+  }
+
+  onDelete(a: AdminAppointmentModel) {
+    // Prototype only (we’ll implement backend + confirmation later)
+    alert('Delete will be implemented later (admin-only).');
+  }
+}

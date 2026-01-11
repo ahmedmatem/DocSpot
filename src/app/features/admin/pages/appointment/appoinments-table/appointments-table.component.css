@@ -1,0 +1,9 @@
+.table-wrap {
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead th {
+    background: rgba(0, 0, 0, .03);
+}

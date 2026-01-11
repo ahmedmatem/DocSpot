@@ -1,0 +1,65 @@
+<section class="container py-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="m-0">Записани часове</h3>
+        <button class="btn btn-outline-secondary" (click)="reload()">Обнови</button>
+      </div>
+
+      <!-- Filters toolbar -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-2 align-items-end">
+            <div class="col-12 col-md-3">
+              <label class="form-label">От</label>
+              <input class="form-control" type="date" [(ngModel)]="from" />
+            </div>
+
+            <div class="col-12 col-md-3">
+              <label class="form-label">До</label>
+              <input class="form-control" type="date" [(ngModel)]="to" />
+            </div>
+
+            <div class="col-12 col-md-3">
+              <label class="form-label">Статус</label>
+              <select class="form-select" [(ngModel)]="status">
+                <option value="ALL">Всички</option>
+                <option value="PENDING">Pending</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="CANCELLED">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+              <label class="form-label">Търсене</label>
+              <input class="form-control" placeholder="име / телефон / имейл"
+                     [(ngModel)]="q" (keyup.enter)="reload()" />
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+              <button class="btn btn-success" (click)="reload()">Търси</button>
+              <button class="btn btn-outline-secondary" (click)="clearFilters()">Изчисти</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @if (loading()) {
+        <div class="text-secondary">Зареждане...</div>
+      }
+
+      @if (error()) {
+        <div class="alert alert-danger">{{ error() }}</div>
+      }
+
+      <app-appointments-table
+        [items]="items()"
+        (select)="openDetails($event)">
+      </app-appointments-table>
+
+      <app-appointment-drawer
+        [appointment]="selected()"
+        (close)="selected.set(null)"
+        (cancel)="onCancel($event)"
+        (reschedule)="onReschedule($event)"
+        (delete)="onDelete($event)">
+      </app-appointment-drawer>
+    </section>

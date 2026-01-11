@@ -1,0 +1,43 @@
+<div class="table-wrap">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Час</th>
+                <th>Пациент</th>
+                <th>Телефон</th>
+                <th>Тип</th>
+                <th>Статус</th>
+                <th class="text-end">Действия</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (!items.length) {
+            <tr>
+                <td colspan="7" class="text-center text-secondary py-4">Няма записани часове.</td>
+            </tr>
+            } @else {
+            @for (a of items; track a.id) {
+            <tr (click)="select.emit(a)" style="cursor:pointer">
+                <td>{{ a.appointmentDate }}</td>
+                <td><strong>{{ a.appointmentTime }}</strong></td>
+                <td>{{ a.patientName }}</td>
+                <td>{{ a.patientPhone }}</td>
+                <td>{{ a.visitType }}</td>
+                <td>
+                    <span class="badge" [class.text-bg-warning]="a.appointmentStatus === 'PENDING'"
+                        [class.text-bg-success]="a.appointmentStatus === 'CONFIRMED'"
+                        [class.text-bg-secondary]="a.appointmentStatus === 'CANCELLED'">
+                        {{ a.appointmentStatus }}
+                    </span>
+                </td>
+                <td class="text-end">
+                    <button class="btn btn-sm btn-outline-primary" (click)="onOpen($event, a)">Детайли</button>
+                </td>
+            </tr>
+            }
+            }
+        </tbody>
+    </table>
+</div>

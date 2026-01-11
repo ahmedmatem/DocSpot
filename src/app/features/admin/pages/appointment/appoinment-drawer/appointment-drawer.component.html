@@ -1,0 +1,75 @@
+@if (appointment) {
+    
+<div class="backdrop" (click)="close.emit()"></div>
+
+<aside class="drawer" (click)="$event.stopPropagation()">
+    <div class="drawer-header">
+        <div>
+            <div class="title">{{ appointment.patientName }}</div>
+            <div class="sub text-secondary">{{ appointment.appointmentDate }} • {{ appointment.appointmentTime }}</div>
+        </div>
+        <button class="btn btn-sm btn-outline-secondary" (click)="close.emit()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+        <div class="row g-2">
+            <div class="col-12">
+                <div class="k">Телефон</div>
+                <div class="v">{{ appointment.patientPhone }}</div>
+            </div>
+
+            <div class="col-12">
+                <div class="k">Имейл</div>
+                <div class="v">{{ appointment.patientEmail }}</div>
+            </div>
+
+            <div class="col-12">
+                <div class="k">Тип</div>
+                <div class="v">{{ appointment.visitType }}</div>
+            </div>
+
+            <div class="col-12">
+                <div class="k">Статус</div>
+                <div class="v">
+                    <span class="badge" [class.text-bg-warning]="appointment.appointmentStatus === 'PENDING'"
+                        [class.text-bg-success]="appointment.appointmentStatus === 'CONFIRMED'"
+                        [class.text-bg-secondary]="appointment.appointmentStatus === 'CANCELLED'">
+                        {{ appointment.appointmentStatus }}
+                    </span>
+                </div>
+            </div>
+
+            @if (appointment.message) {
+            <div class="col-12">
+                <div class="k">Съобщение</div>
+                <div class="v">{{ appointment.message }}</div>
+            </div>
+            }
+
+            <hr class="my-3" />
+
+            <div class="col-12">
+                <label class="form-label k">Причина за отказ (по избор)</label>
+                <input class="form-control" [(ngModel)]="cancelReason" placeholder="напр. пациентът не може" />
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button class="btn btn-danger w-100" [disabled]="appointment.appointmentStatus === 'CANCELLED'"
+                    (click)="cancelClicked()">
+                    Откажи часа
+                </button>
+
+                <button class="btn btn-outline-primary w-100" (click)="reschedule.emit(appointment)">
+                    Премести (по-късно)
+                </button>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-outline-danger w-100" (click)="delete.emit(appointment)">
+                    Изтрий (опасно)
+                </button>
+            </div>
+        </div>
+    </div>
+</aside>
+}
