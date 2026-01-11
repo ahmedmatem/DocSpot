@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AdminAppointmentModel } from '../../../data-access/models/admin-appointment.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-appointments-table',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './appointments-table.component.html',
   styleUrl: './appointments-table.component.css'
 })

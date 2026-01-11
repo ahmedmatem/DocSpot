@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AdminAppointmentModel } from '../../../data-access/models/admin-appointment.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-appointment-drawer',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './appointment-drawer.component.css',
   styleUrl: './appointment-drawer.component.css'
 })

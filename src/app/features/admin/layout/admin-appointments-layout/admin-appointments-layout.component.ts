@@ -6,8 +6,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AppointmentsTableComponent } from '../../pages/appointment/appoinments-table/appointments-table.component';
-import { AppointmentDrawerComponent } from '../../pages/appointment/appoinment-drawer/appointment-drawer.component';
+import { AppointmentsTableComponent } from '../../pages/admin-appointments/appoinments-table/appointments-table.component';
+import { AppointmentDrawerComponent } from '../../pages/admin-appointments/appoinment-drawer/appointment-drawer.component';
 
 @Component({
   selector: 'app-admin-appointments-layout',
