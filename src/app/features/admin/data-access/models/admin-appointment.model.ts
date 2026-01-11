@@ -1,6 +1,6 @@
 import { VisitType } from "../../../../core/data-access/models/appointment.model";
 
-export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED | DONE';
+export type AppointmentStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'DONE';
 
 export interface AdminAppointmentModel {
   id: string;
