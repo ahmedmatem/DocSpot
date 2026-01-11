@@ -3,6 +3,7 @@ import { AdminLayoutComponent } from "./layout/admin-layout/admin-layout.compone
 import { adminGuard } from "../../core/auth/admin.gard";
 import { AdminDashboardComponent } from "./pages/admin-dashboard/admin-dashboard.component";
 import { WeekScheduleLayoutComponent } from "./layout/week-schedule-layout/week-schedule-layout.component";
+import { AdminAppointmentsLayoutComponent } from "./layout/admin-appointments-layout/admin-appointments-layout.component";
 
 export const ADMIN_ROUTES: Routes = [
     {
@@ -10,18 +11,21 @@ export const ADMIN_ROUTES: Routes = [
         component: AdminLayoutComponent,
         canActivate: [adminGuard],
         children: [
-            { 
+            {
                 path: '',
-                 component: AdminDashboardComponent 
+                pathMatch: 'full',
+                component: AdminDashboardComponent
             },
-            { 
-                path: 'schedule', 
+            {
+                path: 'appointments',
+                component: AdminAppointmentsLayoutComponent
+            },
+            {
+                path: 'schedule',
                 component: WeekScheduleLayoutComponent,
                 loadChildren: () => import('./pages/admin-week-schedule/week-schedule.routes')
                     .then(m => m.WEEK_SCHEDULE_ROUTES)
             },
-            // { path: 'users', loadComponent: () => import('./pages/users.component').then(m => m.UsersComponent) },
-            // add more children here
         ],
     },
 ];

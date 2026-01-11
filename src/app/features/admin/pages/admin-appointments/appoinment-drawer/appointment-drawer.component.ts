@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-appointment-drawer',
   imports: [CommonModule, FormsModule],
-  templateUrl: './appointment-drawer.component.css',
+  templateUrl: './appointment-drawer.component.html',
   styleUrl: './appointment-drawer.component.css'
 })
 export class AppointmentDrawerComponent {

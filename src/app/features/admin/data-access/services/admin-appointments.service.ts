@@ -5,13 +5,13 @@ import { AdminAppointmentModel } from "../models/admin-appointment.model";
 import { AdminAppointmentsQuery } from "../models/admin-appointments.query";
 import { environment } from "../../../../../environments/environment";
 
-[Injectable({ providedIn: 'root' })]
+@Injectable({ providedIn: 'root' })
 export class AdminAppointmentsService {
     private http = inject(HttpClient);
     private url = `${environment.apiAdminBaseUrl}/appointments`;
 
     getList(query: AdminAppointmentsQuery): Observable<AdminAppointmentModel[]> {
-        let params = new HttpParams;
+        let params = new HttpParams();
 
         if (query.from) params.set('from', query.from);
         if (query.to) params.set('to', query.to);
