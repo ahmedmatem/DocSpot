@@ -120,6 +120,15 @@
   overflow: hidden !important;
 }
 
+:host .doctor-name {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: clamp(1.1rem, 3.2vw, 1.6rem); /* mobile -> small, desktop -> bigger */
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -127,7 +136,7 @@
 @media (min-width: 1200px) {
   .navmenu {
     padding: 0;
-  }
+  } 
 
   .navmenu ul {
     margin: 0;
@@ -253,7 +262,7 @@
     top: 0;
     left: -100%;
     visibility: visible;
-  }
+  }  
 }
 
 /* Mobile Navigation */

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, HostListener, Inject, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Renderer2, signal, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { SITE_INFO } from '../../../core/config/site-info';
@@ -12,6 +12,8 @@ import { SITE_INFO } from '../../../core/config/site-info';
 })
 export class HeaderComponent {
   @ViewChild('headerEl', { static: true }) headerEl!: ElementRef<HTMLElement>;
+
+  showDoctorName = signal(false);
 
   phoneNumber = SITE_INFO.phoneNumber;
   email = SITE_INFO.email;
@@ -37,6 +39,7 @@ export class HeaderComponent {
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.toggleScrolled();
+    this.showDoctorName.set(window.scrollY > 60);
   }
 
   private toggleScrolled(): void {
