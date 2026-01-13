@@ -8,7 +8,7 @@ export interface AdminAppointmentModel {
   patientEmail: string;
   visitType: VisitType;
 
-  appointmentDate: string; // yyyy-MM-dd
+  appointmentDate: Date; // yyyy-MM-dd
   appointmentTime: string; // HH:mm
   message?: string;
 

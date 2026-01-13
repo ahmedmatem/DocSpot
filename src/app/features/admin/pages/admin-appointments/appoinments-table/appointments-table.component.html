@@ -20,7 +20,7 @@
             } @else {
             @for (a of items; track a.id) {
             <tr (click)="select.emit(a)" style="cursor:pointer">
-                <td>{{ a.appointmentDate }}</td>
+                <td>{{ a.appointmentDate | date: 'dd/MM/yyyy'}}</td>
                 <td><strong>{{ a.appointmentTime }}</strong></td>
                 <td>{{ a.patientName }}</td>
                 <td>{{ a.patientPhone }}</td>
