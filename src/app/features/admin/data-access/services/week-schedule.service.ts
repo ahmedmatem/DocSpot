@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { WeekModel } from '../models/week-schedule.model';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 
 export type weekSchedulePayload = { startDate: string /**yyyy-mm-dd */, slotLength: number, weekSchedule: WeekModel }
 
@@ -15,14 +15,14 @@ export class WeekScheduleService {
 
   // quick lookup by startDate
   private readonly weeksByStartDate = new Map<string, weekSchedulePayload>();
-  
+
   private weeksLoaded = false;
 
   constructor(private http: HttpClient) { }
 
   /** Load ALL week schedules from API (only once) */
   loadAll(): Observable<weekSchedulePayload[]> {
-    if(this.weeksLoaded && this.weeksSubject.value){
+    if (this.weeksLoaded && this.weeksSubject.value) {
       // already loaded -> reuse
       return of(this.weeksSubject.value);
     }
@@ -33,9 +33,11 @@ export class WeekScheduleService {
       .pipe(
         tap(weeks => {
           this.weeksLoaded = true;
-          this.weeksSubject.next(weeks);
+          // keep local cache + map
+          this.weeksCache = weeks.slice().sort((a, b) => a.startDate.localeCompare(b.startDate));
+          this.weeksSubject.next(this.weeksCache);
           this.weeksByStartDate.clear();
-          for (const w of weeks) {
+          for (const w of this.weeksCache) {
             this.weeksByStartDate.set(w.startDate, w);
           }
         })
@@ -48,7 +50,7 @@ export class WeekScheduleService {
   }
 
   /** Get closest previous weekSchedule for current date/today */
-  getActiveWeekSchedule() : weekSchedulePayload | undefined {
+  getActiveWeekSchedule(): weekSchedulePayload | undefined {
     const now = new Date();
     // normalize "today" to midnight
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -56,7 +58,7 @@ export class WeekScheduleService {
     let activeWeek: weekSchedulePayload | undefined;
     let closestTime = -Infinity;
 
-    for(const startDateKey of this.weeksByStartDate.keys()) {
+    for (const startDateKey of this.weeksByStartDate.keys()) {
       const startDate = this.parseYyyyMmDd(startDateKey);
       const time = startDate.getTime();
 
@@ -71,15 +73,18 @@ export class WeekScheduleService {
 
   }
 
-  save(dto: weekSchedulePayload){
+  save(dto: weekSchedulePayload) {
     const url = `${environment.apiAdminBaseUrl}/week-schedule/`;
-    return this.http.post<weekSchedulePayload>(url, dto).pipe(
+    return this.http.post<{ id: string }>(url, dto).pipe(
+      // rebuild a full payload from the dto
+      map(() => ({ ...dto } as weekSchedulePayload)),
       tap(saved => {
+        this.weeksByStartDate.set(saved.startDate, saved);
+
         // update cache
         const others = this.weeksCache.filter(w => w.startDate !== saved.startDate);
-        this.weeksCache = [...others, saved].sort((a, b) =>
-          a.startDate.localeCompare(b.startDate)
-        );
+        this.weeksCache = [...others, saved].sort((a, b) => a.startDate.localeCompare(b.startDate));
+
         // notify subscribers (layout)
         this.weeksSubject.next(this.weeksCache);
       })
