@@ -8,6 +8,8 @@ import { WeekModel } from '../../../../data-access/models/week-schedule.model';
 import { DaylyScheduleComponent } from './dayly-schedule/dayly-schedule.component';
 import { DaylySchedulePreviewComponent, TimeInterval } from './dayly-schedule-preview/dayly-schedule-preview.component';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-create-week-schedule',
@@ -18,7 +20,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule
-],
+  ],
   templateUrl: './create-week-schedule.component.html',
   styleUrl: './create-week-schedule.component.css'
 })
@@ -37,7 +39,8 @@ export class CreateWeekScheduleComponent {
   saved = false;
   error = '';
 
-  constructor(private weekScheduleService: WeekScheduleService, private router: Router) {}
+  constructor(private weekScheduleService: WeekScheduleService,
+    private router: Router, private toast: ToastrService) { }
 
   onSlotLenChanged(e: Event) {
     const len = Number((e.target as HTMLInputElement).value);
@@ -45,7 +48,7 @@ export class CreateWeekScheduleComponent {
   }
 
   // MatCalendar two-way binding helper
-  onDateSelected(d: Date){
+  onDateSelected(d: Date) {
     this.selectedDate.set(d);
   }
 
@@ -61,30 +64,35 @@ export class CreateWeekScheduleComponent {
     });
   }
 
-  saveWeekSchedule(){
+  saveWeekSchedule() {
     this.error = '';
     this.saved = false;
 
     this.saving = true;
-    const dto = { 
+    const dto = {
       startDate: this.toYMD(this.selectedDate()!),
       slotLength: this.slotLen(),
-      weekSchedule: this.week() 
+      weekSchedule: this.week()
     };
-    this.weekScheduleService.save(dto).subscribe({
-      next: saved => { 
-        this.saved = true; 
-        this.saving = false; 
+    this.weekScheduleService.save(dto).pipe(
+      finalize(() => this.saving = false)
+    ).subscribe({
+      next: saved => {
+        this.saved = true;
+
+        this.toast.success('Разписанието е запазено успешно');
 
         // 1) tabs get updated via service.weeks$ → layout reacts
         // 2) navigate to the new week tab
         this.router.navigate(['/admin/schedule', saved.startDate]);
       },
-      error: e => { 
-        this.error = e?.error ?? 'Неуспешен запис'; this.saving = false;
+      error: e => {
+        console.log('Error:', e?.error.error);
+        this.toast.error(`Неуспешен запис`);
+        // this.error = e?.error ?? 'Неуспешен запис'; this.saving = false;
       }
     });
-  }  
+  }
 
   private toYMD(d: Date): string {
     const y = d.getFullYear();

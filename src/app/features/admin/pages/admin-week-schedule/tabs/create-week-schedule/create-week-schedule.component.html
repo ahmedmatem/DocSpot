@@ -4,11 +4,8 @@
         <h5>Разписание по дни</h5>
 
         <label for="slot-len">Продължителност на прегледа</label>
-        <select id="slot-len" 
-          class="form-select mb-3 py-3"
-          [value]="slotLen()"
-          (change)="onSlotLenChanged($event)"
-          aria-label="Default select example">
+        <select id="slot-len" class="form-select mb-3 py-3" [value]="slotLen()" (change)="onSlotLenChanged($event)"
+            aria-label="Default select example">
             <option value="15">15 мин</option>
             <option value="20">20 мин</option>
             <option value="30">30 мин</option>
@@ -17,7 +14,8 @@
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMon" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseMon" aria-expanded="true" aria-controls="collapseOne">
                         ПОНЕДЕЛНИК
                     </button>
                 </h2>
@@ -29,7 +27,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTue" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTue" aria-expanded="false" aria-controls="collapseTwo">
                         ВТОРНИК
                     </button>
                 </h2>
@@ -41,7 +40,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWed" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseWed" aria-expanded="false" aria-controls="collapseTwo">
                         СРЯДА
                     </button>
                 </h2>
@@ -53,7 +53,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThu" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThu" aria-expanded="false" aria-controls="collapseTwo">
                         ЧЕТВЪРТЪК
                     </button>
                 </h2>
@@ -65,7 +66,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFri" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFri" aria-expanded="false" aria-controls="collapseTwo">
                         ПЕТЪК
                     </button>
                 </h2>
@@ -77,7 +79,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSat" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSat" aria-expanded="false" aria-controls="collapseTwo">
                         СЪБОТА
                     </button>
                 </h2>
@@ -89,7 +92,8 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSun" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSun" aria-expanded="false" aria-controls="collapseTwo">
                         НЕДЕЛЯ
                     </button>
                 </h2>
@@ -102,24 +106,17 @@
         </div>
     </div>
 
-    <div class="preview-schedule">        
+    <div class="preview-schedule">
         <h5>Преглед</h5>
         <div class="row">
             <div class="col col-md-8 col-lg-9">
-                
+
                 <div>Начало на разписанието</div>
                 <mat-form-field appearance="outline" class="">
                     <mat-label>Избери начало</mat-label>
 
-                    <input
-                        matInput
-                        [matDatepicker]="picker"
-                        [min]="minDate"
-                        [max]="maxDate"
-                        [value]="selectedDate()"
-                        (dateChange)="onDateSelected($event.value)"
-                        required
-                    />
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="selectedDate()"
+                        (dateChange)="onDateSelected($event.value)" required />
 
                     <!-- calendar icon button -->
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -128,69 +125,66 @@
 
             </div>
             <div class="col col-md-4 col-lg-3">
-                <button type="button" 
-                    (click)="saveWeekSchedule()"
+                <button type="button" (click)="saveWeekSchedule()" [disabled]="saving"
                     class="btn btn-sm btn-outline-success float-end">
-                    Запази
+                    @if (!saving)
+                    { Запази }
+                    @else {
+                    <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+                    Зареждане...
+                    }
                 </button>
             </div>
         </div>
 
-        
+
         <table class="table">
             <thead>
                 <tr>
-                <td scope="col">Понеделник</td>
-                <td scope="col">Вторник</td>
-                <td scope="col">Сряда</td>
-                <td scope="col">Четвъртък</td>
-                <td scope="col">Петък</td>
-                <td scope="col">Събота</td>
-                <td scope="col">Неделя</td>
+                    <td scope="col">Понеделник</td>
+                    <td scope="col">Вторник</td>
+                    <td scope="col">Сряда</td>
+                    <td scope="col">Четвъртък</td>
+                    <td scope="col">Петък</td>
+                    <td scope="col">Събота</td>
+                    <td scope="col">Неделя</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['mon'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> 
-                </td>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['tue'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview>  
-                </td>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['wed'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> 
-                </td>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['thu'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> 
-                </td>
-                <td><app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['fri'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> </td>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['sat'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> 
-                </td>
-                <td>
-                    <app-dayly-schedule-preview
-                        [intervals]="dayIntervals(week()['sun'])"
-                        [slotLengthMinutes]="slotLen()">
-                    </app-dayly-schedule-preview> 
-                </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['mon'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['tue'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['wed'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['thu'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
+                    <td><app-dayly-schedule-preview [intervals]="dayIntervals(week()['fri'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview> </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['sat'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
+                    <td>
+                        <app-dayly-schedule-preview [intervals]="dayIntervals(week()['sun'])"
+                            [slotLengthMinutes]="slotLen()">
+                        </app-dayly-schedule-preview>
+                    </td>
                 </tr>
             </tbody>
         </table>
