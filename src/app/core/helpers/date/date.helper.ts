@@ -5,3 +5,9 @@ export function toIsoDate(d: Date): string {
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
 }
+
+export function todayYmd(sep: string = '-'): string {
+    const d = new Date();
+    const y = d.getFullYear(), m = (d.getMonth()+1).toString().padStart(2,'0'), day = d.getDate().toString().padStart(2,'0');
+    return `${y}${sep}${m}${sep}${day}`;
+  }

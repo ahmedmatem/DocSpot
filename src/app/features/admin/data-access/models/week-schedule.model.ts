@@ -14,3 +14,17 @@ export interface ExclusionBatchDto {
     // Bulk creation: multiple days/slots to exclude
     exclusions: ScheduleExclusion[];
 }
+
+export const WeekDays = [
+    { key: 1, label: 'Пон' },
+    { key: 2, label: 'Вто' },
+    { key: 3, label: 'Сря' },
+    { key: 4, label: 'Чет' },
+    { key: 5, label: 'Пет' },
+    { key: 6, label: 'Съб' },
+    { key: 0, label: 'Нед' },
+] as const;
+
+export type WeekDay = typeof WeekDays[number];
+export type WeekDayKey = WeekDay['key'];
+export type WeekDayLabel = WeekDay['label'];

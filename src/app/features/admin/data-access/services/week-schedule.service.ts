@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
-import { WeekModel } from '../models/week-schedule.model';
+import { ExclusionBatchDto, WeekModel } from '../models/week-schedule.model';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 
-export type weekSchedulePayload = { 
+export type weekSchedulePayload = {
   startDate: string,      //yyyy-mm-dd 
   slotLength: number,     // in minutes
   weekSchedule: WeekModel // {mon: [...], tue: [...], ...}
@@ -94,8 +94,17 @@ export class WeekScheduleService {
       })
     );
   }
-  
-  deleteWeekSchedule(startDate: string){
+
+  saveExclusions(exclusionsDto: ExclusionBatchDto) {
+    const url = `${environment.apiAdminBaseUrl}/week-schedule-exclusions/`;
+    return this.http.post<void>(url, exclusionsDto).pipe(
+      tap(saved => {
+
+      })
+    );
+  }
+
+  deleteWeekSchedule(startDate: string) {
     const url = `${environment.apiAdminBaseUrl}/week-schedule/${startDate}`;
     return this.http.delete<number>(url).pipe(
       tap({
@@ -104,8 +113,8 @@ export class WeekScheduleService {
           this.weeksByStartDate.delete(startDate);
           this.weeksSubject.next(this.weeksCache);
         },
-        error: () => {},
-        complete: () => {},
+        error: () => { },
+        complete: () => { },
       })
     );
   }

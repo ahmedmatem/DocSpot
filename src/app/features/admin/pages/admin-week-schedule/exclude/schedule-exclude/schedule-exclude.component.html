@@ -1,1 +1,147 @@
-<p>schedule-exclude works!</p>
+<div class="d-flex align-items-center p-3 bg-white">
+    <h5 class="mb-0">Управление на изключения в разписанието</h5>
+</div>
+
+<div class="container-fluid">
+  <div class="row g-3">
+    <div class="col-lg-8">
+
+      <!-- Card 1: exclude slots inside a day -->
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Изключи слотове в конкретен ден</div>
+        <div class="card-body">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+              <label class="form-label">Дата</label>
+              <input class="form-control" type="date" [value]="slotDate()" (change)="slotDate.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">От</label>
+              <input class="form-control" type="time" [value]="slotFrom()" (change)="slotFrom.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">До</label>
+              <input class="form-control" type="time" [value]="slotTo()" (change)="slotTo.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Причина (по желание)</label>
+              <input class="form-control" placeholder="Почивка / служебно / празник" [value]="slotReason()" (input)="slotReason.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-outline-primary me-2" (click)="previewTimeExclusion()">Преглед</button>
+              <button class="btn btn-primary" (click)="addTimeExclusion()">Добави</button>
+            </div>
+          </div>
+
+          <!-- Optional preview list of slots for the selected day -->
+          <div class="mt-3" *ngIf="previewSlots().length">
+            <div class="small text-muted mb-1">Ще се изключат слотове:</div>
+            <ul class="list-group">
+              @for (s of previewSlots(); track $index) {
+                <li class="list-group-item py-1">{{ s }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: exclude full days (range + weekdays) -->
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Изключи цели дни (диапазон)</div>
+        <div class="card-body">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+              <label class="form-label">От дата</label>
+              <input class="form-control" type="date" [value]="rangeFrom()" (change)="rangeFrom.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">До дата</label>
+              <input class="form-control" type="date" [value]="rangeTo()" (change)="rangeTo.set(($any($event.target).value))">
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-wrap gap-3">
+                @for (w of weekdays; track $index) {
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [checked]="weekdayFlags()[w.key]"
+                           (change)="toggleWeekday(w.key, $any($event.target).checked)">
+                    <label class="form-check-label">{{ w.label }}</label>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Причина (по желание)</label>
+              <input class="form-control" placeholder="Празник / неработен ден" [value]="dayReason()" (input)="dayReason.set(($any($event.target).value))">
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-outline-primary me-2" (click)="previewDayExclusion()">Преглед</button>
+              <button class="btn btn-primary" (click)="addDayExclusion()">Добави</button>
+            </div>
+          </div>
+
+          <div class="mt-3" *ngIf="previewDays().length">
+            <div class="small text-muted mb-1">Ще се изключат дни:</div>
+            <div class="d-flex flex-wrap gap-2">
+              @for (d of previewDays(); track $index) {
+                <span class="badge text-bg-secondary">{{ d }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: pending list & save -->
+      <div class="card">
+        <div class="card-header fw-semibold d-flex align-items-center">
+          За запис
+          <button class="btn btn-sm btn-outline-danger ms-auto" (click)="clearPending()" [disabled]="!pending().length">Изчисти</button>
+        </div>
+        <div class="card-body">
+          @if (pending().length) {
+            <ul class="list-group mb-3">
+              @for (e of pending(); track $index) {
+                <li class="list-group-item d-flex align-items-center">
+                  <div class="me-auto">
+                    @if (e.type === 'time') {
+                      <div><strong>{{ e.date }}</strong> · {{ e.startTime }}–{{ e.endTime }}</div>
+                    } @else {
+                      <div><strong>{{ e.date }}</strong> · Цял ден</div>
+                    }
+                    @if (e.reason) { <div class="text-muted small">{{ e.reason }}</div> }
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary" (click)="removePending($index)">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </li>
+              }
+            </ul>
+            <button class="btn btn-success" [disabled]="saving()" (click)="saveAll()">Запази</button>
+          } @else {
+            <div class="text-muted">Няма добавени изключвания.</div>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: live preview panel -->
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-header fw-semibold">Преглед за избрания ден</div>
+        <div class="card-body">
+          <!-- Пример: покажи дневните слотове с маркирани изключени -->
+          <app-dayly-schedule-preview
+            [intervals]="dayIntervalsForPreview()"
+            [slotLengthMinutes]="slotLengthMinutes">
+          </app-dayly-schedule-preview>
+
+          <div class="small text-muted mt-2">
+            * Изключените слотове ще бъдат недостъпни за запис.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
