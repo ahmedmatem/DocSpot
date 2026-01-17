@@ -1,8 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { weekSchedulePayload, WeekScheduleService } from '../../data-access/services/week-schedule.service';
-import { DaylySchedulePreviewComponent, TimeInterval } from './tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
+import { TimeInterval } from './tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
 import { WeekScheduleTableComponent } from "../../../../shared/ui/week-schedule-table/week-schedule-table.component";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-week-schedule',
@@ -23,6 +25,10 @@ export class AdminWeekScheduleComponent {
   private weeks: weekSchedulePayload[] = [];
 
   selectedWeek: weekSchedulePayload | undefined = undefined;
+  deleting = signal(false);
+  error = signal<string | null>(null);
+
+  constructor(private router: Router, private toastr: ToastrService){}
 
   ngOnInit() {
     // 1) Ensure weeks are loaded
@@ -63,5 +69,26 @@ export class AdminWeekScheduleComponent {
         const [start, end] = interval.split('-').map(x => x.trim());
         return { start, end };
       });
+  }
+
+  deleteWeek() {
+    const wk = this.selectedWeek;
+    if (!wk) return;
+
+    if (!window.confirm(`Изтриване на разписанието от ${wk.startDate}?`)) return;
+
+    this.deleting.set(true);
+
+    this.weekScheduleService.deleteWeekSchedule(wk.startDate).pipe(
+      finalize(() => this.deleting.set(false))
+    ).subscribe({
+      next: () => { 
+        this.toastr.success('Разписанието е изтрито');
+        this.router.navigate(['/admin/schedule/create']);
+      },
+      error: () => {
+        this.toastr.error('Грешка при изтриване');
+      }
+    });
   }
 }

@@ -4,7 +4,11 @@ import { environment } from '../../../../../environments/environment';
 import { WeekModel } from '../models/week-schedule.model';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 
-export type weekSchedulePayload = { startDate: string /**yyyy-mm-dd */, slotLength: number, weekSchedule: WeekModel }
+export type weekSchedulePayload = { 
+  startDate: string,      //yyyy-mm-dd 
+  slotLength: number,     // in minutes
+  weekSchedule: WeekModel // {mon: [...], tue: [...], ...}
+}
 
 @Injectable({ providedIn: 'root' })
 export class WeekScheduleService {
@@ -90,9 +94,20 @@ export class WeekScheduleService {
       })
     );
   }
-
-  handleSave(success: boolean) {
-
+  
+  deleteWeekSchedule(startDate: string){
+    const url = `${environment.apiAdminBaseUrl}/week-schedule/${startDate}`;
+    return this.http.delete<number>(url).pipe(
+      tap({
+        next: () => {
+          this.weeksCache = this.weeksCache.filter(w => w.startDate !== startDate);
+          this.weeksByStartDate.delete(startDate);
+          this.weeksSubject.next(this.weeksCache);
+        },
+        error: () => {},
+        complete: () => {},
+      })
+    );
   }
 
   /** Optional: clear cache (e.g. on logout) */

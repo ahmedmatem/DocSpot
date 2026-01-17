@@ -1,1 +1,19 @@
+<div class="d-flex align-items-center p-3 bg-white">
+    <h5 class="mb-0">от {{ selectedWeek?.startDate }}</h5>
+
+    <button class="btn btn-outline-danger btn-sm ms-auto" [disabled]="deleting() || !selectedWeek"
+        (click)="deleteWeek()">
+        @if (!deleting())
+        { Изтрий }
+        @else {
+        <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+        Изтриване...
+        }
+    </button>
+</div>
+
+@if (error()) {
+<div class="alert alert-danger">{{ error() }}</div>
+}
+
 <app-week-schedule-table [payload]="selectedWeek" />
