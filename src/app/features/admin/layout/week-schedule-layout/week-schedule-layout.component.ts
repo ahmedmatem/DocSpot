@@ -47,8 +47,8 @@ export class WeekScheduleLayoutComponent {
 
   readonly tabs = computed<Tab[]>(() => [...this.starts().map(d => ({
       label: d === this.activeScheduleStartDate
-        ? `От ${d.replaceAll('-', '/')}-Актуално`
-        : `От ${d.replaceAll('-', '/')}`,
+        ? `От ${d.toDmy('-')} [Актуално]`
+        : `От ${d.toDmy('-')}`,
       start: d
     }))
   ]);

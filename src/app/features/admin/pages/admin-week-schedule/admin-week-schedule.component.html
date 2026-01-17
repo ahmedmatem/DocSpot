@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center p-3 bg-white">
-    <h5 class="mb-0">от {{ selectedWeek?.startDate }}</h5>
+    <h5 class="mb-0">от {{ selectedWeek?.startDate?.toDmy('-') }}</h5>
 
     <button class="btn btn-outline-danger btn-sm ms-auto" [disabled]="deleting() || !selectedWeek"
         (click)="deleteWeek()">
