@@ -26,10 +26,10 @@ export class AppointmentService {
   }
 
   confirmPublic(id: string, token: string) {
-    return this.http.get(`${this.apiUrl}/public/confirm`, {params: {id, token}});
+    return this.http.get(`${this.apiUrl}/confirm`, {params: {id, token}});
   }
 
   cancelPublic(id: string, token: string) {
-    return this.http.get(`${this.apiUrl}/public/cancel`, {params: {id, token}, responseType: 'text'});
+    return this.http.post(`${this.apiUrl}/cancellation`, {params: {id, token}, responseType: 'text'});
   }
 }
