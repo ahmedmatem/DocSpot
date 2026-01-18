@@ -30,6 +30,7 @@ export class AppointmentService {
   }
 
   cancelPublic(id: string, token: string) {
-    return this.http.post(`${this.apiUrl}/cancellation`, {params: {id, token}, responseType: 'text'});
+    // POST /api/appointments/cancellation/preview?id=...&token=...
+    return this.http.post(`${this.apiUrl}/cancellation`, null, {params: {id, token}, responseType: 'text'});
   }
 }
