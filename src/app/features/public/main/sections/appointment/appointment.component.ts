@@ -34,10 +34,12 @@ export class AppointmentComponent {
   @ViewChild('appointmentForm') appointmentFormRef!: ElementRef<HTMLFormElement>;
   @ViewChild('successModalEl') successModalEl!: ElementRef<HTMLDivElement>;
 
+  // services
   private appointmentService = inject(AppointmentService);
-  private destroyRef = inject(DestroyRef);
-  private toastr = inject(ToastrService);
   private holidaysService = inject(HolidaysService);
+  private toastr = inject(ToastrService);
+
+  private destroyRef = inject(DestroyRef);
 
   private holidaySet = new Set<string>();
   
@@ -79,7 +81,7 @@ export class AppointmentComponent {
     this.loadTimeSlotsForDate(today);
 
     // Load holidays for next 12 months(one year) from today
-    this.holidaysService.getUpcomingHolidaysOneYearAhead()
+    this.holidaysService.getUpcoming()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(set => {
         set.forEach(d => this.holidaySet.add(d))
@@ -214,7 +216,7 @@ export class AppointmentComponent {
     const dateStr = toIsoDate(date);
     // console.log('Selected date:', date, 'Sending:', dateStr);
 
-    this.appointmentService.getTimeSlotsBy(dateStr).subscribe({
+    this.appointmentService.getSlots(dateStr).subscribe({
       next: (slots) => (this.timeSlots = slots),
       error: (err) => {
         console.error('Error loading slots', err);

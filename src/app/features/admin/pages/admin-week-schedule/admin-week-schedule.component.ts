@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { weekSchedulePayload, WeekScheduleService } from '../../data-access/services/week-schedule.service';
+import { weekSchedulePayload, WeekSchedulesService } from '../../data-access/services/week-schedule.service';
 import { TimeInterval } from './tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
 import { WeekScheduleTableComponent } from "../../../../shared/ui/week-schedule-table/week-schedule-table.component";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { ToastrService} from 'ngx-toastr';
 })
 export class AdminWeekScheduleComponent {
   // dayKeys: string[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-  weekScheduleService = inject(WeekScheduleService);
+  weekScheduleService = inject(WeekSchedulesService);
   private route = inject(ActivatedRoute);
 
   // observable – useful for list somewhere
@@ -79,7 +79,7 @@ export class AdminWeekScheduleComponent {
 
     this.deleting.set(true);
 
-    this.weekScheduleService.deleteWeekSchedule(wk.startDate).pipe(
+    this.weekScheduleService.delete(wk.startDate).pipe(
       finalize(() => this.deleting.set(false))
     ).subscribe({
       next: () => { 

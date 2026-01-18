@@ -11,7 +11,9 @@ export type weekSchedulePayload = {
 }
 
 @Injectable({ providedIn: 'root' })
-export class WeekScheduleService {
+export class WeekSchedulesService {
+  apiUrl = `${environment.apiAdminBaseUrl}/week-schedules`;
+
   private readonly weeksSubject = new BehaviorSubject<weekSchedulePayload[] | null>(null);
   readonly weeks$ = this.weeksSubject.asObservable();
 
@@ -31,9 +33,8 @@ export class WeekScheduleService {
       return of(this.weeksSubject.value);
     }
 
-    const url = `${environment.apiAdminBaseUrl}/all-week-schedule/`;
     return this.http
-      .get<weekSchedulePayload[]>(url)
+      .get<weekSchedulePayload[]>(this.apiUrl)
       .pipe(
         tap(weeks => {
           this.weeksLoaded = true;
@@ -48,12 +49,12 @@ export class WeekScheduleService {
       );
   }
 
-  /** Get a week schedule by exact startDate (yyyy-mm-dd) after loadAll() */
+  // Get a week schedule by exact startDate (yyyy-mm-dd) after loadAll()
   getWeekByStartDate(startDate: string): weekSchedulePayload | undefined {
     return this.weeksByStartDate.get(startDate);
   }
 
-  /** Get closest previous weekSchedule for current date/today */
+  // Get closest previous weekSchedule for current date/today
   getActiveWeekSchedule(): weekSchedulePayload | undefined {
     const now = new Date();
     // normalize "today" to midnight
@@ -74,12 +75,10 @@ export class WeekScheduleService {
     }
 
     return activeWeek;
-
   }
 
   save(dto: weekSchedulePayload) {
-    const url = `${environment.apiAdminBaseUrl}/week-schedule/`;
-    return this.http.post<{ id: string }>(url, dto).pipe(
+    return this.http.post<{ id: string }>(this.apiUrl, dto).pipe(
       // rebuild a full payload from the dto
       map(() => ({ ...dto } as weekSchedulePayload)),
       tap(saved => {
@@ -96,17 +95,16 @@ export class WeekScheduleService {
   }
 
   saveExclusions(exclusionsDto: ExclusionBatchDto) {
-    const url = `${environment.apiAdminBaseUrl}/week-schedule-exclusions/`;
-    return this.http.post<void>(url, exclusionsDto).pipe(
+    return this.http.post<void>(`${this.apiUrl}/esclusions`, exclusionsDto).pipe(
       tap(saved => {
 
       })
     );
   }
 
-  deleteWeekSchedule(startDate: string) {
+  delete(startDate: string) {
     const url = `${environment.apiAdminBaseUrl}/week-schedule/${startDate}`;
-    return this.http.delete<number>(url).pipe(
+    return this.http.delete<number>(`${this.apiUrl}/${startDate}`).pipe(
       tap({
         next: () => {
           this.weeksCache = this.weeksCache.filter(w => w.startDate !== startDate);

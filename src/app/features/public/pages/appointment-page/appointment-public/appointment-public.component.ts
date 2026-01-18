@@ -45,7 +45,7 @@ export class AppointmentPublicComponent {
       this.error.set(null);
       this.appt.set(null);
 
-      this.appointmentService.getCancelPreview(this.id()!, this.token()!)
+      this.appointmentService.cancellationPreview(this.id()!, this.token()!)
         .pipe(finalize(() => this.loading.set(false)))
         .subscribe({
           next: (appt) => {

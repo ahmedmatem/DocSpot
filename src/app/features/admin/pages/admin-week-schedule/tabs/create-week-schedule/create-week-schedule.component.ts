@@ -3,7 +3,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _MatInternalFormField, MatNativeDateModule } from '@angular/material/core';
-import { WeekScheduleService } from '../../../../data-access/services/week-schedule.service';
+import { WeekSchedulesService } from '../../../../data-access/services/week-schedule.service';
 import { WeekModel } from '../../../../data-access/models/week-schedule.model';
 import { DaylyScheduleComponent } from './dayly-schedule/dayly-schedule.component';
 import { DaylySchedulePreviewComponent, TimeInterval } from './dayly-schedule-preview/dayly-schedule-preview.component';
@@ -39,7 +39,7 @@ export class CreateWeekScheduleComponent {
   saved = false;
   error = '';
 
-  constructor(private weekScheduleService: WeekScheduleService,
+  constructor(private weekScheduleService: WeekSchedulesService,
     private router: Router, private toast: ToastrService) { }
 
   onSlotLenChanged(e: Event) {

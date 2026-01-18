@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { WeekScheduleService } from '../../../../data-access/services/week-schedule.service';
+import { WeekSchedulesService } from '../../../../data-access/services/week-schedule.service';
 import { todayYmd } from '../../../../../../core/helpers/date/date.helper';
 import { WeekDayKey, WeekDays } from '../../../../data-access/models/week-schedule.model'
 import { DaylySchedulePreviewComponent } from '../../tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
@@ -23,7 +23,7 @@ type PendingExclusion = {
 })
 export class ScheduleExcludeComponent {
   private toastr = inject(ToastrService);
-  private weekScheduleService = inject(WeekScheduleService);
+  private weekScheduleService = inject(WeekSchedulesService);
 
   // slot length – take from active week or setting
   slotLengthMinutes = 20;

@@ -9,32 +9,28 @@ import { Slot } from '../../../shared/ui/time-slot/time-slot.component';
   providedIn: 'root'
 })
 export class AppointmentService {
-  private baseUrl = environment.apiBaseUrl + '/appointments/';
+  private url = environment.apiBaseUrl + '/appointments';
+  private siteBaseUrl = environment.siteBaseUrl + '/appointment';
 
   constructor(private http: HttpClient) { }
 
   create(payload: CreateAppointmentPayload ) {
-    return this.http.post(this.baseUrl + "book", payload, { responseType: 'text' });
+    return this.http.post(this.url, payload, { responseType: 'text' });
   }
 
-  getTimeSlotsBy(date: string): Observable<Slot[]> {
-    let params = new HttpParams().set('date', date); // date in "yyyy-mm-dd"
-
-     // Backend should return something like ["09:00", "09:20", "09:40", ...]
-     return this.http.get<Slot[]>(this.baseUrl + "time-slots", { params });
+  getSlots(date: string): Observable<Slot[]> {
+     return this.http.get<Slot[]>(`${this.url}/${date}/slots`);
   }
 
-  getCancelPreview(id: string, token:string) : Observable<CancelPreviewModel> {
-    return this.http.get<CancelPreviewModel>(`${this.baseUrl}cancel-preview`, {params: {id, token}});
+  cancellationPreview(id: string, token:string) : Observable<CancelPreviewModel> {
+    return this.http.get<CancelPreviewModel>(`${this.url}/cancellation/preview`, {params: {id, token}});
   }
 
-  // Confirm public appointment by its public token and Id
   confirmPublic(id: string, token: string) {
-    return this.http.get(`${this.baseUrl}public/confirm`, {params: {id, token}});
+    return this.http.get(`${this.siteBaseUrl}/public/confirm`, {params: {id, token}});
   }
 
-  // Cancel public appointment by its public token and Id
   cancelPublic(id: string, token: string) {
-    return this.http.get(`${this.baseUrl}public/cancel`, {params: {id, token}, responseType: 'text'});
+    return this.http.get(`${this.siteBaseUrl}/public/cancel`, {params: {id, token}, responseType: 'text'});
   }
 }

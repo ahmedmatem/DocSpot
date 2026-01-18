@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, RouterLinkActive, RouterLink, Router } from "@angular/router";
-import { weekSchedulePayload, WeekScheduleService } from '../../data-access/services/week-schedule.service';
+import { weekSchedulePayload, WeekSchedulesService } from '../../data-access/services/week-schedule.service';
 
 type Tab = { label: string, start: string | 'current' };
 
@@ -11,7 +11,7 @@ type Tab = { label: string, start: string | 'current' };
   styleUrl: './week-schedule-layout.component.css'
 })
 export class WeekScheduleLayoutComponent {
-  weekScheduleService = inject(WeekScheduleService);
+  weekScheduleService = inject(WeekSchedulesService);
 
   // observable – useful for list somewhere
   weeks$ = this.weekScheduleService.weeks$;

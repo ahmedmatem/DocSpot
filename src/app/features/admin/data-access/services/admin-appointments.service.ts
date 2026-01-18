@@ -18,8 +18,6 @@ export class AdminAppointmentsService {
         if (query.q) params = params.set('q', query.q);
         if (query.status && query.status !== 'ALL') params = params.set('status', query.status);
 
-        console.log("Params: ", params);
-
         return this.http.get<AdminAppointmentModel[]>(this.url, { params });
     }
 

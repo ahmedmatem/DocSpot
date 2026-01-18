@@ -9,22 +9,26 @@ import { environment } from '../../../../environments/environment';
 export class HolidaysService {
 
   private http = inject(HttpClient);
-  private baseUrl = environment.apiBaseUrl + '/holidays';
+  private apiUrl = environment.apiBaseUrl + '/holidays';
 
-  getHolidaysForYear(year: number): Observable<Set<string>> {
-    return this.http.get<string[]>(`${this.baseUrl}/${year}`).pipe(
+  getAllFor(year: number): Observable<Set<string>> {
+    return this.http.get<string[]>(`${this.apiUrl}/year/${year}`).pipe(
       map(list => new Set(list)) // ISO strings yyyy-MM-dd
     );
   }
 
-  getHolidaysRange(from: string, to: string): Observable<Set<string>> {
-    return this.http.get<string[]>(`${this.baseUrl}?from=${from}&to=${to}`).pipe(
+  getInRange(from: string, to: string): Observable<Set<string>> {
+    return this.http.get<string[]>(`${this.apiUrl}?from=${from}&to=${to}`).pipe(
       map(list => new Set(list))
     );
   }
 
-  getUpcomingHolidaysOneYearAhead(): Observable<Set<string>> {
-    return this.http.get<string[]>(`${this.baseUrl}/upcoming`).pipe(
+  getUpcoming(months: number = 12): Observable<Set<string>> {
+    const url = months == null
+      ? `${this.apiUrl}/upcoming?months=12`
+      : `${this.apiUrl}/upcoming`;
+
+    return this.http.get<string[]>(url).pipe(
       map(list => new Set(list))
     );
   }
