@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { WeekSchedulesService } from '../../../../data-access/services/week-schedule.service';
-import { todayYmd } from '../../../../../../core/helpers/date/date.helper';
-import { WeekDayKey, WeekDays } from '../../../../data-access/models/week-schedule.model'
-import { DaylySchedulePreviewComponent } from '../../tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
+import { WeekSchedulesService } from '../../../data-access/services/week-schedule.service';
+import { todayYmd } from '../../../../../core/helpers/date/date.helper';
+import { WeekDayKey, WeekDays } from '../../../data-access/models/week-schedule.model'
+import { DaylySchedulePreviewComponent } from '../tabs/create-week-schedule/dayly-schedule-preview/dayly-schedule-preview.component';
 
 type ExclusionType = 'day' | 'time';
 
@@ -18,10 +18,10 @@ type PendingExclusion = {
 @Component({
   selector: 'app-schedule-exclude',
   imports: [DaylySchedulePreviewComponent],
-  templateUrl: './schedule-exclude.component.html',
-  styleUrl: './schedule-exclude.component.css'
+  templateUrl: './schedule-exclusions.component.html',
+  styleUrl: './schedule-exclusions.component.css'
 })
-export class ScheduleExcludeComponent {
+export class ScheduleExclusionsComponent {
   private toastr = inject(ToastrService);
   private weekScheduleService = inject(WeekSchedulesService);
 

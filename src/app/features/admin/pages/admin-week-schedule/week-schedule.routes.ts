@@ -11,9 +11,9 @@ export const WEEK_SCHEDULE_ROUTES = [
             .then(m => m.CreateWeekScheduleComponent)
     },
     {
-        path: 'exclude',
-        loadComponent: () => import('./exclude/schedule-exclude/schedule-exclude.component')
-            .then(m => m.ScheduleExcludeComponent)
+        path: 'exclusions',
+        loadComponent: () => import('./schedule-exclusions/schedule-exclusions.component')
+            .then(m => m.ScheduleExclusionsComponent)
     },
     {
         path: ':start',
